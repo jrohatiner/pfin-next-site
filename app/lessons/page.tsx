@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllLessons } from "@/lib/content";
+import { PageFooter } from "@/components/page-footer";
 
 export default function LessonsPage() {
   const lessons = getAllLessons();
@@ -18,6 +19,7 @@ export default function LessonsPage() {
           ))}
         </ul>
       )}
+      <PageFooter />
     </main>
   );
 }

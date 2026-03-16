@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllVideos } from "@/lib/content";
+import { PageFooter } from "@/components/page-footer";
 
 export default function VideosPage() {
   const videos = getAllVideos();
@@ -18,6 +19,7 @@ export default function VideosPage() {
           ))}
         </ul>
       )}
+      <PageFooter />
     </main>
   );
 }
