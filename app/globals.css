@@ -24,3 +24,157 @@ main {
   max-width: 1000px;
   margin: 0 auto;
 }
+
+/* Navbar */
+.navbar {
+  background: #1a1a2e;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.navbar-brand:hover {
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar-links a {
+  color: #e0e0e0;
+}
+
+.navbar-links a:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Content Navigation Footer */
+.content-nav {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.content-nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.nav-link:hover {
+  background: #f5f5f5;
+  text-decoration: none;
+}
+
+.nav-prev {
+  text-align: left;
+  max-width: 40%;
+}
+
+.nav-next {
+  text-align: right;
+  max-width: 40%;
+}
+
+.nav-home {
+  color: #0b57d0;
+  font-weight: 500;
+}
+
+.nav-label {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nav-title {
+  color: #0b57d0;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Home Page */
+.home-page {
+  padding: 2rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+.content-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.content-card {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.content-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+.content-card h2 {
+  color: #1a1a2e;
+  margin: 0 0 0.75rem 0;
+  font-size: 1.5rem;
+}
+
+.content-card p {
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}

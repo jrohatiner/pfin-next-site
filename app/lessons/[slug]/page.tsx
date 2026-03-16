@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import { getLessonBySlug } from "@/lib/content";
+import { getLessonBySlug, getLessonNavigation } from "@/lib/content";
 import { MDXRenderer } from "@/components/mdx-renderer";
+import { ContentNav } from "@/components/content-nav";
 
 type Props = {
   params: Promise<{
@@ -14,9 +15,18 @@ export default async function LessonDetailPage({ params }: Props) {
 
   if (!lesson) return notFound();
 
+  const nav = getLessonNavigation(slug);
+
   return (
     <main className="p-8 max-w-4xl mx-auto">
       <MDXRenderer source={lesson.content} />
+      <ContentNav
+        prevSlug={nav.prev?.slug}
+        prevTitle={nav.prev?.title}
+        nextSlug={nav.next?.slug}
+        nextTitle={nav.next?.title}
+        basePath="/lessons"
+      />
     </main>
   );
 }
