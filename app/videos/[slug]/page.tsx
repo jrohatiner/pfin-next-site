@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getVideoBySlug, loadVideoComponent } from "@/lib/content-registry";
+import { readContentFile, markdownToHtml } from "@/lib/markdown-reader";
 
 type Props = {
   params: Promise<{
@@ -15,20 +16,32 @@ export default async function VideoDetailPage({ params }: Props) {
 
   const VideoContent = await loadVideoComponent(slug);
 
-  if (!VideoContent) {
-    // Show a placeholder if no component is registered yet
+  if (VideoContent) {
     return (
       <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
         <h1>{video.title}</h1>
-        <p>Content coming soon. This video component has not been created yet.</p>
+        <VideoContent />
       </main>
     );
   }
 
+  // Fallback: Read markdown file
+  const markdownContent = await readContentFile("videos", video.id);
+  
+  if (!markdownContent) {
+    return (
+      <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
+        <h1>{video.title}</h1>
+        <p>Content not available.</p>
+      </main>
+    );
+  }
+
+  const htmlContent = markdownToHtml(markdownContent);
+
   return (
     <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-      <h1>{video.title}</h1>
-      <VideoContent />
+      <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
     </main>
   );
 }
