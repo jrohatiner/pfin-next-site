@@ -1,7 +1,5 @@
 # How to Get Past Resume Software
 
-## How to Get Past Resume Software
-
 Keywords – the Achilles Heel of every student’s resume. Knowing how to craft a killer resume and cover letter that grabs employers attention (and keeps it) will only help once you get your resume in the hands of a recruiter. Unfortunately, today anyone can apply to just about any job anywhere, so that great new opening you have your eye on may already have dozens, or even hundreds, of other applicants.
 
 How can you get your resume read, let alone rise to the top of the pile?

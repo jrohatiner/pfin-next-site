@@ -1,7 +1,5 @@
 # Calculate Your Car Loan Payments
 
-# Calculate Your Car Loan Payments
-
 The first BIG purchase many people make is when they buy their first car. This calculator will help show the impact of many of the biggest factors people need to consider when taking out their first loan for a big purchase.
 
 If you’ve used our **[Credit Card Payment Calculator](/content/index?url=credit-card-payment-calculator-2)** to see how minimum payments on small loans are made, you might want to start thinking about what happens when you make bigger purchases, with bigger loans.

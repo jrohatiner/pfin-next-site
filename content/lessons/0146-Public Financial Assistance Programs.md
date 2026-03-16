@@ -1,7 +1,5 @@
 # Public Financial Assistance Programs
 
-## Public Financial Assistance Programs
-
 Building your personal finances from the ground up is something most of us face.  You may already have faced times when you had very little or no income, and you were just trying to get to a point where you felt like you didn’t have to worry about paying your bills.  It can be a long struggle, and the government recognizes that.  That’s why there are several public programs specifically designed to help people get out of these situations.
 
 In the real world, many people suffer for months simply because they do not know that help is available. These programs exist for people who have lost their jobs and for people who have jobs but still earn very little income.

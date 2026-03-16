@@ -1,7 +1,5 @@
 # Are Internships Worth It?
 
-## Are Internships Worth It?
-
 The internship season is upon us. It might be better to say that it never ended.
 
 Of course. This is a great opportunity to replace a vague estimate with compelling, data-backed statistics that will be much more valuable to your student audience.

@@ -1,7 +1,5 @@
 # Do You Need a Tax Professional?
 
-## Do You Need a Tax Professional?
-
 Most young people are perfectly capable of filing their own taxes using the IRS Form 1040. However, as your personal finances grow more complex and you become eligible for tax credits, have multiple sources of income, or need to report common tax additions, filing your own taxes becomes more complicated. At the point where completing your own tax return becomes a burden, you may want to consider hiring a tax professional for help.
 
 ## What Choices Are Available When Completing Your Tax Return?

@@ -1,7 +1,5 @@
 # A Beginner’s Guide to Borrowing Wisely
 
-# A Beginner’s Guide to Borrowing Wisely
-
 Credit involves borrowing money with a promise to repay it, often formalized in a **promissory note**. As a **negotiable instrument**, this promise can be sold to a new owner, or **holder in due course**, who has the legal right to collect the debt. Understanding these rules is essential for navigating the many forms of credit, from credit cards to mortgages, and using them wisely.
 
 ## The Two Sides of Credit: Benefits and Costs

@@ -1,7 +1,5 @@
 # Automatic Payments: Convenience vs. Risk
 
-# Automatic Payments: Convenience vs. Risk
-
 That title may be a bit hyperbolic – Automatic Bill Payments can be a huge time saver, and do help make sure your bills get paid on time (avoiding late fees and general headaches). This does come at a price, though – when your bills are automatically paid, you may not always have a receipt on hand, or realize exactly when the payment processes.
 
 ![safety-44486_640](/images/b1a5d57ce52f6a68.png)

@@ -1,7 +1,5 @@
 # Why Health Insurance is So Expensive?
 
-## Why Health Insurance is So Expensive?
-
 Health insurance is usually the most complicated and expensive insurance you need. Unfortunately, it’s also usually the most important, making it very difficult to avoid the cost. With very few exceptions, health insurance is mandatory for all citizens in the United States, but the way you become insured will change drastically based on your age, income, and the company you work for.
 
 ## Types of Health Insurance

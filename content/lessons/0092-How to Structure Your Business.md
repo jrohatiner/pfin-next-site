@@ -1,7 +1,5 @@
 # How to Structure Your Business
 
-## How to Structure Your Business
-
 A key first step for any entrepreneur is setting up an organization that will be used to formally embark on the business journey, but many new business owners struggle to identify the best way to move forward. These are the most common ways to organize a business, from the simplest through the most complex.
 
 ## 1. Sole Proprietorship

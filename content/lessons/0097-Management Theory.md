@@ -1,7 +1,5 @@
 # Management Theory
 
-## Management Theory
-
 When holding a job, there are usually certain people that have specific “titles” that describe the work that they do.  With those titles, comes the chain of command, which can be looked at as a flow chart:
 
 **The CEO** –> who oversees **Management** –> who oversees **Associates**.

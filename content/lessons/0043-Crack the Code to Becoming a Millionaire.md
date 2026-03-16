@@ -1,7 +1,5 @@
 # Crack the Code to Becoming a Millionaire
 
-# Crack the Code to Becoming a Millionaire
-
 Want to be a millionaire? Everyone does, but do you know how much you need to save and what rate of return you need to get on your investments to reach that million level? This financial calculator helps you learn how your savings grows over time and how sensitive your final savings balance is to the rate of return you are earning.
 
 * Did you know if you start saving $100 a month on your 18th birthday and put that money in a piggy bank, by the time you are 65, you will have $56,400 in your piggy bank (and $0 in interest).

@@ -1,7 +1,5 @@
 # Build Your First Marketing Plan
 
-## Build Your First Marketing Plan
-
 Marketing is a cornerstone in the success of any organization. However, successful marketing is not as wide spread in large part due to the lack of a marketing strategy and marketing plan. To ensure marketing is successful for an organization, companies need to compose long-term marketing strategies promoting their goals with specific actions. A short term marketing plan is also necessary to ensure actions taken are consistent and effective in achieving the long-term marketing strategy. Here we will be discussing the purpose of a marketing plan as well as key components of the design and elements of a good marketing plan.
 
 ## Purpose

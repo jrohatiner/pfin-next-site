@@ -1,7 +1,5 @@
 # Accounting for Liabilities
 
-## Accounting for Liabilities
-
 Every firm needs capital to purchase assets like inventory, land, and equipment. They also need cash to help manage expenses such as paying employees. How do companies raise the money they need to run their businesses? The answer is through a mix of liabilities (borrowing money) and equity (selling shares of ownership of the company). Liabilities and equity make up the right-hand side of the fundamental accounting equation:
 
 **Assets = Liabilities + Shareholders’ Equity**

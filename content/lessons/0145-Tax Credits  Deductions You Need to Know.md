@@ -1,7 +1,5 @@
 # Tax Credits & Deductions You Need to Know
 
-# Tax Credits & Deductions You Need to Know
-
 When you file your income taxes, you can “write off” certain expenses, and get extra tax credits based on your living situation. This means that if you had a qualifying expense over the course of the year, you basically get to subtract that expense from the income you report to the IRS, which will increase your tax return (or at least lower how much you owe).
 
 Claiming these credits and deductions can be tricky. Many people miss out on them simply by not knowing they exist or how to claim them.

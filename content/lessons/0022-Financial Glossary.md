@@ -1,7 +1,5 @@
 # Financial Glossary
 
-# Financial Glossary
-
 |  |  |
 | --- | --- |
 | **1040** | The base form to file federal income taxes in the United States. It may be supplemented with additional forms for complex tax returns. |

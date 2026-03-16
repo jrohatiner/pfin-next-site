@@ -1,7 +1,5 @@
 # Getting Help With Debt Repayment
 
-## Getting Help With Debt Repayment
-
 If you find yourself over your head in debt, there is always a light at the end of the tunnel. Credit counseling agencies, both for-profit and non-profit, exist in every state to help people build a clear, workable path back to a healthy personal financial situation.
 
 If you do need the help of a credit counselor, this is what you can expect.

@@ -1,7 +1,5 @@
 # Income Protection Insurance Calculator
 
-# Income Protection Insurance Calculator
-
 Think of your income as the engine that powers your financial life. But when an unexpected illness, injury, or tragedy occurs, that engine can stall. Income protection insurance is designed to be your backup plan. So you can still pay your bills if you’re unable to work due to a disability, and that your family is taken care of financially if you were to pass away.
 
 Disability insurance provides you with a monthly paycheck if you can’t work, while life insurance provides a lump-sum payment to your loved ones. This calculator helps you understand your potential need for both and see how your personal and professional choices affect the cost of coverage.

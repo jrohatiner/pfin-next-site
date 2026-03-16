@@ -1,7 +1,5 @@
 # How Borrowers Manage Personal Debt
 
-# How Borrowers Manage Personal Debt
-
 Being in debt means that you owe money to someone else or to a financial institution. The most common form of debt is borrowing money from a bank or credit union in the form of a loan or credit card. The borrower then agrees to repay the borrowed amount plus interest over a specific period of time. Other forms of debt include mortgages, car loans, student loans, and personal loans.
 
 Being in debt can be a financial burden as it requires regular repayments and can lead to financial stress if the borrower is unable to make the required payments. Debt means different things to different people, having some debt is perfectly healthy for your personal finances, but too much can lead to excessive stress or bankruptcy.

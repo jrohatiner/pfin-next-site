@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
-import { getVideoBySlug } from "@/lib/content";
+import { getVideoBySlug, getVideoNavigation } from "@/lib/content";
+import { MDXRenderer } from "@/components/mdx-renderer";
+import { ContentNav } from "@/components/content-nav";
 
 type Props = {
   params: Promise<{
@@ -9,14 +11,22 @@ type Props = {
 
 export default async function VideoDetailPage({ params }: Props) {
   const { slug } = await params;
-  const video = await getVideoBySlug(slug);
+  const video = getVideoBySlug(slug);
 
   if (!video) return notFound();
 
+  const nav = getVideoNavigation(slug);
+
   return (
-    <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-      <h1>{video.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: video.contentHtml }} />
+    <main className="p-8 max-w-4xl mx-auto">
+      <MDXRenderer source={video.content} />
+      <ContentNav
+        prevSlug={nav.prev?.slug}
+        prevTitle={nav.prev?.title}
+        nextSlug={nav.next?.slug}
+        nextTitle={nav.next?.title}
+        basePath="/videos"
+      />
     </main>
   );
 }

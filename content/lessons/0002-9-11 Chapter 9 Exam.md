@@ -1,9 +1,5 @@
 # 9-11 Chapter 9 Exam
 
-Listen To This Lesson
-
-## 9-11 Chapter 9 Exam
-
 **Which of the following is NOT a way that options can earn you money?**
 
 |  |  |

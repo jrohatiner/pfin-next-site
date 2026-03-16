@@ -1,7 +1,5 @@
 # A Strategy to Build Wealth, Not Debt
 
-## A Strategy to Build Wealth, Not Debt
-
 Building wealth is a long-term financial goal that provides financial security, and sets the stage for a comfortable retirement. Although there is no secret formula for becoming wealthy, the process involves developing a solid financial plan, sticking to it, and creating a sustainable strategy that grows your wealth over time.
 
 This typically requires dedication, patience, and discipline and can be achieved by incorporating smart saving and investing strategies, and making wise financial decisions. You probably already heard about budgeting, spending plans, savings strategies, credit cards, and all points in between. Now, we’ll put everything together to make a plan to build lifelong wealth.

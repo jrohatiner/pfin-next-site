@@ -1,7 +1,5 @@
 # Income Tax Filing Tips & Tricks
 
-## Income Tax Filing Tips & Tricks
-
 ## What is income tax?
 
 ![income tax deduction](/images/45a224b1d3f061b2.jpg)

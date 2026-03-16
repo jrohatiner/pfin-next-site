@@ -1,7 +1,5 @@
 # The Cost of Raising a Family
 
-## The Cost of Raising a Family
-
 ![](/images/6fb793a54c1218c4.jpg)
 
 Before starting a family, you have to know how to manage a household. You probably have an idea about how to be a good housemate from the things that you like and don’t like about living with your family. There’s more to it than who will wash the dishes or who will take out the trash.

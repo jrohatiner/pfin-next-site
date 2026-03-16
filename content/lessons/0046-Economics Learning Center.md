@@ -1,7 +1,5 @@
 # Economics Learning Center
 
-## *Economics Learning Center*
-
 Browse our collection of articles, videos, and activities relating to basic Economics.
 
 **Popular Topics:**

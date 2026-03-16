@@ -1,7 +1,5 @@
 # GAAP – Accounting for Equity
 
-## GAAP – Accounting for Equity
-
 The Basic Accounting Equation says that
 
 **Assets – Liabilities = Equity**

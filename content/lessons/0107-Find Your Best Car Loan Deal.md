@@ -1,7 +1,5 @@
 # Find Your Best Car Loan Deal
 
-## Find Your Best Car Loan Deal
-
 You finally made the big decision – you are going to buy a car. You did your research and the test drives – you found 3 cars that you really like, from three different dealerships. You really love them all – but at the end of the day, your final decision will come down to price.
 
 ![](/images/6cfea81946f34132.png)

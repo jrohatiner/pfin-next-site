@@ -1,7 +1,5 @@
 # The Car Buying Checklist
 
-## The Car Buying Checklist
-
 Buying a car is usually the first big purchase a person will make. A **car loan** is a type of **consumer loan**, also known as installment credit, where you borrow a lump sum and pay it back in fixed monthly payments. There is also no shortage of horror stories of people immediately regretting the decision, either by buying a new car and later struggling to meet payments, or a used car with hidden mechanical problems demanding costly repairs.
 
 When you need to buy your first (or next) car, make sure these factors weigh in on your decision.

@@ -1,7 +1,5 @@
 # How Do You Stop Impulse Purchases?
 
-## How Do You Stop Impulse Purchases?
-
 Every person makes hundreds of purchase decisions every month. Think about how many individual items you choose when buying groceries. Which fruits or vegetables will you buy? Which cleaning product will you pick up? What if you need new batteries…
 
 An important step in managing your personal finances is to understand the reasons why you make purchases and to be able to research them ahead of time.

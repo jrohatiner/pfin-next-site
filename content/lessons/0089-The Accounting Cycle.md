@@ -1,6 +1,5 @@
 # The Accounting Cycle
 
-# The Accounting Cycle
 
 The accounting cycle is a series of steps that businesses take to track transactions and consolidate financial information over a specific accounting period (month, quarter, year). The end result of the accounting cycle is the production of accurate financial statements for that period and preparedness for the next accounting period. We will examine the steps involved in the accounting cycle, which are: (1) identifying transactions, (2) recording transactions, (3) posting journal entries to the general ledger, (4) creating an unadjusted trial balance, (5) preparing adjusting entries, (6) creating an adjusted trial balance, (7) preparing financial statements, (8) preparing closing entries, and (9) preparing the post-closing trial balance.
 

@@ -1,7 +1,5 @@
 # Evaluating Big-Ticket Purchases
 
-## Evaluating Big-Ticket Purchases
-
 When evaluating how to spend your money, most people make a fairly simple comparison. If the benefit they believe they will receive from the purchase is greater than the cost, then most people go ahead with the purchase.
 
 To master your personal finances, you need to start thinking long-term. There are many potential purchases you believe are worth the money, so you spend money now instead of saving for the future. In order to change your mindset, you need to start thinking long-term. By building a toolkit that helps you consider how a purchase will affect you in the future, you’ll start to make smarter financial decisions.

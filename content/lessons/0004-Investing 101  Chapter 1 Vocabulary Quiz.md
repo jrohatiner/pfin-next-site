@@ -1,7 +1,5 @@
 # Investing 101 – Chapter 1 Vocabulary Quiz
 
-# Investing 101 – Chapter 1 Vocabulary Quiz
-
 ```
 Complete the following short vocabulary quiz. 
 

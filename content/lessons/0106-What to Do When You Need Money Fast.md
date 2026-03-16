@@ -1,7 +1,5 @@
 # What to Do When You Need Money Fast
 
-# What to Do When You Need Money Fast
-
 Short-term financing means taking out a loan to make a purchase, usually with a loan term of less than one year. There are many different types of short-term financing, the most common of which are “Buy Now, Pay Later,” “Unsecured Personal Loans,” and “Payday Loans.”
 
 ## Short-Term Financing vs Credit Cards

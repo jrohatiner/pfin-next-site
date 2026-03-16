@@ -1,7 +1,5 @@
 # How to Negotiate With Creditors
 
-## How to Negotiate With Creditors
-
 Most adults have faced a financial emergency, when an unexpected event has broken their budget or spending plan into pieces. Sometimes more than one emergency has occurred in a short period of time, causing debt balances to spiral out of control.
 
 Even in extreme circumstances, it is still possible to keep your personal finances under control. With some ingenuity and a little bit of work, you can start slashing loan balances while keeping your credit score protected.

@@ -1,7 +1,5 @@
 # What Benefits to Look for in a Job Offer
 
-# What Benefits to Look for in a Job Offer
-
 When you start looking for a job, one of the first questions you will have when browsing job listings is “how much does this pay”? Starting salary or hourly pay is, of course, an important factor when considering a position, but is very far from the full story.
 
 This lesson will cover some of the other common workplace benefits to look for when exploring your career – and how to balance “benefits” vs “salary” when considering a new job.

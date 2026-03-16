@@ -1,7 +1,5 @@
 # Biggest Mistakes of Job Seekers
 
-## Biggest Mistakes of Job Seekers
-
 In today’s competitive job market, the average search for a professional role [takes between 3 to 6 months](https://www.indeed.com/career-advice/finding-a-job/how-long-does-it-take-to-find-a-job)—a significant increase from previous years. For new graduates or those changing careers, the search can often last six months or longer. Your search will be much harder if you make one of the following very common mistakes. Avoiding all 5 will not promise an interview, but hitting any might mean you are missing out.
 
 ## Errors In Your Application

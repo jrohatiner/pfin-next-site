@@ -1,7 +1,5 @@
 # Getting Out of Debt: Debt Snowball and Debt Avalanche
 
-# Getting Out of Debt: Debt Snowball and Debt Avalanche
-
 Most financial literacy topics are dedicated to helping you stay out of debt and build wealth – but what do you do if you already find yourself deep in debt with no obvious way out?
 
 This is where **accelerated debt repayment** strategies can come into play – and the two most popular strategies have a chilly, wintery theme: the **Debt Snowball** and the **Debt Avalanche**.

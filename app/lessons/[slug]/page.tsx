@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
-import { getLessonBySlug } from "@/lib/content";
+import { getLessonBySlug, getLessonNavigation } from "@/lib/content";
+import { MDXRenderer } from "@/components/mdx-renderer";
+import { ContentNav } from "@/components/content-nav";
 
 type Props = {
   params: Promise<{
@@ -9,14 +11,22 @@ type Props = {
 
 export default async function LessonDetailPage({ params }: Props) {
   const { slug } = await params;
-  const lesson = await getLessonBySlug(slug);
+  const lesson = getLessonBySlug(slug);
 
   if (!lesson) return notFound();
 
+  const nav = getLessonNavigation(slug);
+
   return (
-    <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-      <h1>{lesson.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: lesson.contentHtml }} />
+    <main className="p-8 max-w-4xl mx-auto">
+      <MDXRenderer source={lesson.content} />
+      <ContentNav
+        prevSlug={nav.prev?.slug}
+        prevTitle={nav.prev?.title}
+        nextSlug={nav.next?.slug}
+        nextTitle={nav.next?.title}
+        basePath="/lessons"
+      />
     </main>
   );
 }

@@ -1,7 +1,5 @@
 # Buy vs. Lease a Car Calculator
 
-# Buy vs. Lease a Car Calculator
-
 Compare the financial impact of buying versus leasing a vehicle
 
 Getting your first car is a major milestone. One of the biggest choices you’ll face is whether to buy or lease your vehicle. Both options have their own pros and cons, and the long-term financial impact isn’t always obvious.  

@@ -1,6 +1,5 @@
 # Get a Snapshot of Your Financial Health
 
-# Get a Snapshot of Your Financial Health
 
 Knowing your net worth is the first step towards growing it! This tool will help you organize your assets in one place, and even help project how they will grow in the future.
 

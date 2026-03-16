@@ -1,7 +1,5 @@
 # Calculate the True Cost of Credit Card Debt
 
-# Calculate the True Cost of Credit Card Debt
-
 Credit Cards! These are usually the first “loans” a person takes out, and the first monthly payments! Tens of thousands of young people dig themselves deep into credit card debt before they even realize it, so have fun with this payments calculator to see how much these bits of plastic REALLY cost!
 
 If you have already used our **[Compound Interest Calculator](/content/index?url=savings-growth-and-compound-interest-calculator)**, try using the same interest rate you hoped to save at as the same amount your credit card company charges. Then double it to get a more realistic picture!

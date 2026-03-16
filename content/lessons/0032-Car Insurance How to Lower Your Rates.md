@@ -1,7 +1,5 @@
 # Car Insurance: How to Lower Your Rates
 
-## Car Insurance: How to Lower Your Rates
-
 If you drive a car, you need to be covered by some sort of automobile insurance. You have probably seen dozens of advertisements from insurance companies claiming to help lower your rates, improve your coverage, or just encouraging you to compare rates, but before you buy your first insurance policy or change insurance providers, the first step is understanding exactly how car insurance works.
 
 ## Types of Car Insurance

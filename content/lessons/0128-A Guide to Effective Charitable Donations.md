@@ -1,7 +1,5 @@
 # A Guide to Effective Charitable Donations
 
-# A Guide to Effective Charitable Donations
-
 Setting aside some money for charitable giving is an important part of every budget or spending plan. Charitable organizations are essential to helping people in need and cannot function without regular contributions from the public.
 
 ## Types of Charitable Giving

@@ -1,7 +1,5 @@
 # Accounting Learning Center
 
-## *Accounting Learning Center*
-
 Browse our collection of articles, videos, and activities relating to basic Accounting.
 
 **Popular Topics:**

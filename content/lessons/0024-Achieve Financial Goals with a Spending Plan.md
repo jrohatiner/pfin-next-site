@@ -1,7 +1,5 @@
 # Achieve Financial Goals with a Spending Plan
 
-# Achieve Financial Goals with a Spending Plan
-
 If you want to start building your wealth, your spending plan is the first and most important step. Make sure to refer to it often to ensure you’re balancing your spending and saving in the right way. This will help you steadily increase your wealth over time.
 
 ## Definition of Spending Plan

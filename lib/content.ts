@@ -1,88 +1,110 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { remark } from "remark";
-import html from "remark-html";
 
-export type ContentItem = {
+const contentDir = path.join(process.cwd(), "content");
+const lessonsDir = path.join(contentDir, "lessons");
+const videosDir = path.join(contentDir, "videos");
+
+export interface ContentItem {
   slug: string;
   title: string;
-  contentHtml: string;
+  content: string; // Raw markdown content for MDX
   filename: string;
-};
+}
 
-const lessonsDir = path.join(process.cwd(), "content", "lessons");
-const videosDir = path.join(process.cwd(), "content", "videos");
-
-function cleanTitleFromFilename(filename: string) {
+function slugify(filename: string): string {
   return filename
-    .replace(/\.md$/i, "")
-    .replace(/^\d+-/, "")
-    .trim();
-}
-
-function slugify(input: string) {
-  return input
-    .replace(/\.md$/i, "")
-    .replace(/^\d+-/, "")
+    .replace(/^\d+-/, "") // Remove leading numbers and dash
+    .replace(/\.md$/, "") // Remove .md extension
     .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim();
+    .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with dashes
+    .replace(/(^-|-$)/g, ""); // Remove leading/trailing dashes
 }
 
-async function parseMarkdownFile(filePath: string): Promise<ContentItem> {
-  const fileContents = fs.readFileSync(filePath, "utf8");
-  const { content, data } = matter(fileContents);
-
-  const processedContent = await remark()
-    .use(html, { sanitize: false })
-    .process(content);
-
-  const contentHtml = processedContent.toString();
-  const filename = path.basename(filePath);
-
-  const title =
-    typeof data.title === "string" && data.title.trim()
-      ? data.title.trim()
-      : cleanTitleFromFilename(filename);
-
-  return {
-    slug: slugify(filename),
-    title,
-    contentHtml,
-    filename,
-  };
-}
-
-async function loadAllFromDir(dir: string): Promise<ContentItem[]> {
+function loadAllFromDir(dir: string): ContentItem[] {
   if (!fs.existsSync(dir)) return [];
 
   const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md"));
+  const items: ContentItem[] = [];
 
-  const items = await Promise.all(
-    files.map((file) => parseMarkdownFile(path.join(dir, file)))
-  );
+  for (const filename of files) {
+    const filePath = path.join(dir, filename);
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const { content } = matter(fileContent);
 
-  return items.sort((a, b) => a.title.localeCompare(b.title));
+    // Extract title from first ## heading
+    const titleMatch = content.match(/^##\s+(.+)$/m);
+    const title = titleMatch ? titleMatch[1].trim() : filename.replace(/\.md$/, "");
+
+    const slug = slugify(filename);
+
+    items.push({ slug, title, content, filename });
+  }
+
+  // Sort alphabetically by title
+  items.sort((a, b) => a.title.localeCompare(b.title));
+
+  return items;
 }
 
-export async function getAllLessons(): Promise<ContentItem[]> {
-  return loadAllFromDir(lessonsDir);
+export function getAllLessons(): ContentItem[] {
+  const items = loadAllFromDir(lessonsDir);
+  // Remove duplicates by keeping only the first occurrence of each title
+  const seenTitles = new Set<string>();
+  return items.filter((item) => {
+    if (seenTitles.has(item.title)) {
+      return false;
+    }
+    seenTitles.add(item.title);
+    return true;
+  });
 }
 
-export async function getAllVideos(): Promise<ContentItem[]> {
-  return loadAllFromDir(videosDir);
+export function getAllVideos(): ContentItem[] {
+  const items = loadAllFromDir(videosDir);
+  // Remove duplicates by keeping only the first occurrence of each title
+  const seenTitles = new Set<string>();
+  return items.filter((item) => {
+    if (seenTitles.has(item.title)) {
+      return false;
+    }
+    seenTitles.add(item.title);
+    return true;
+  });
 }
 
-export async function getLessonBySlug(slug: string): Promise<ContentItem | null> {
-  const items = await getAllLessons();
-  return items.find((item) => item.slug === slug) ?? null;
+export function getLessonBySlug(slug: string): ContentItem | null {
+  const lessons = loadAllFromDir(lessonsDir);
+  return lessons.find((l) => l.slug === slug) ?? null;
 }
 
-export async function getVideoBySlug(slug: string): Promise<ContentItem | null> {
-  const items = await getAllVideos();
-  return items.find((item) => item.slug === slug) ?? null;
+export function getVideoBySlug(slug: string): ContentItem | null {
+  const videos = loadAllFromDir(videosDir);
+  return videos.find((v) => v.slug === slug) ?? null;
+}
+
+export interface ContentNavInfo {
+  prev: { slug: string; title: string } | null;
+  next: { slug: string; title: string } | null;
+}
+
+export function getLessonNavigation(slug: string): ContentNavInfo {
+  const lessons = getAllLessons();
+  const index = lessons.findIndex((l) => l.slug === slug);
+  
+  return {
+    prev: index > 0 ? { slug: lessons[index - 1].slug, title: lessons[index - 1].title } : null,
+    next: index < lessons.length - 1 ? { slug: lessons[index + 1].slug, title: lessons[index + 1].title } : null,
+  };
+}
+
+export function getVideoNavigation(slug: string): ContentNavInfo {
+  const videos = getAllVideos();
+  const index = videos.findIndex((v) => v.slug === slug);
+  
+  return {
+    prev: index > 0 ? { slug: videos[index - 1].slug, title: videos[index - 1].title } : null,
+    next: index < videos.length - 1 ? { slug: videos[index + 1].slug, title: videos[index + 1].title } : null,
+  };
 }

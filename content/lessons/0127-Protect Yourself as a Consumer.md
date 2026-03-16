@@ -1,7 +1,5 @@
 # Protect Yourself as a Consumer
 
-# Protect Yourself as a Consumer
-
 Every time you buy something, you are considered a consumer. The noun **consumerism** refers to the idea that spending money and consuming goods is good for our economy. Because you are willing to spend money on goods and services, businesses can produce items, people can have jobs, money can flow, and our economy expands.
 
 As the world’s economy grows, each person is involved in more and more transactions. The rights and responsibilities of being a well-educated consumer are more important now than ever before.

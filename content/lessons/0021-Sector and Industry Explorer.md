@@ -1,7 +1,5 @@
 # Sector and Industry Explorer
 
-# Sector and Industry Explorer
-
 When looking to compare stocks, it can be tempting to just pick any two companies and try to see which one will perform better. But real investors know that you can only make apples-to-apples comparisons between companies that compete with each other – in the same “Sector” or “Industry”.
 
 This tool allows you to explore stocks by sector and industry. Below you can see the list of the 11 standard Sectors of companies in the United States. Within each sector, you can click to view all the biggest companies in that sector, or dive down to groups of companies within that sector, and even specific industries within each group.
