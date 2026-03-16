@@ -1,7 +1,5 @@
 # Personal Finance Learning Center
 
-## *Personal Finance Learning Center*
-
 Browse our collection of articles, videos, and activities relating to Personal Finance.
 
 **Browse By Topic:**

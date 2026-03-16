@@ -1,6 +1,5 @@
 # What Your Credit Report Says About You
 
-# What Your Credit Report Says About You
 
 Understanding credit reports is crucial for managing your financial life. A credit report is a detailed summary of your credit history, used by creditors, landlords, and sometimes employers to assess your financial responsibility. It includes information on bill payments, loans, and any negative records like bankruptcies. In this lesson, we’ll review the basics so you understand your rights, and why it’s important to maintain a good credit report.
 

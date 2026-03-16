@@ -1,9 +1,5 @@
 # 2-12 Chapter 2 Exam
 
-Listen To This Lesson
-
-## 2-12 Chapter 2 Exam
-
 **If you currently own a stock, the \_\_\_\_ is the price you would be willing to sell it for**
 
 |  |  |

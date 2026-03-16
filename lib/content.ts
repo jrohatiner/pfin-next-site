@@ -74,7 +74,16 @@ export async function getAllLessons(): Promise<ContentItem[]> {
 }
 
 export async function getAllVideos(): Promise<ContentItem[]> {
-  return loadAllFromDir(videosDir);
+  const items = await loadAllFromDir(videosDir);
+  // Remove duplicates by keeping only the first occurrence of each title
+  const seenTitles = new Set<string>();
+  return items.filter((item) => {
+    if (seenTitles.has(item.title)) {
+      return false;
+    }
+    seenTitles.add(item.title);
+    return true;
+  });
 }
 
 export async function getLessonBySlug(slug: string): Promise<ContentItem | null> {

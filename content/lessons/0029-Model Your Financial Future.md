@@ -1,7 +1,5 @@
 # Model Your Financial Future
 
-# Model Your Financial Future
-
 Find out the difference between Simple and Compound Interest! See how big an impact your tax rates and inflation have on your savings over time!
 
 If you have already used our **[Becoming A Millionaire Calculator](/content/index?url=saving-to-be-a-millionaire)**, you can use your targeted Expected Investment Return numbers in this calculator to see how to make that return happen!

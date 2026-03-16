@@ -1,9 +1,5 @@
 # 7-16 Chapter 7 Exam
 
-Listen To This Lesson
-
-## 7-16 Chapter 7 Exam
-
 **True or False - A breakout occurs when a stock's price moves up quickly above a former support line?**
 
 |  |  |

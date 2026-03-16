@@ -1,7 +1,5 @@
 # Investing 101 – Chapter 4 Vocabulary Quiz
 
-# Investing 101 – Chapter 4 Vocabulary Quiz
-
 ```
 Complete the following short vocabulary quiz. 
 

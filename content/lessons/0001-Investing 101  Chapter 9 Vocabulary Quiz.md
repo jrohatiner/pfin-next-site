@@ -1,7 +1,5 @@
 # Investing 101 – Chapter 9 Vocabulary Quiz
 
-# Investing 101 – Chapter 9 Vocabulary Quiz
-
 ```
 Complete the following short vocabulary quiz. 
 

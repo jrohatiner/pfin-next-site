@@ -1,7 +1,5 @@
 # What’s Not Covered in Renter’s Insurance?
 
-## What’s Not Covered in Renter’s Insurance?
-
 **Renter’s** **Insurance** is taken out on property you rent to insure against damage or loss. Renter’s insurance works in a similar fashion to homeowner’s insurance.  Homeowner’s insurance is designed to cover damage to a home’s interior and exterior, the theft of possessions, and personal liability for harm to others, for example if someone fell down your porch steps and sued you.
 
 As a renter, it may seem like the landlord would have you covered, but this is only partly true.  For example, if there is a fire at your apartment building caused by one of your neighbors, your landlord’s insurance would cover the repairs to the building, and his possessions (like any appliances of furniture provided in the rental units), but it would not cover any of your personal items that were destroyed.

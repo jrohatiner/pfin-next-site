@@ -1,7 +1,5 @@
 # Financial Literacy Pre-Test
 
-## Financial Literacy Pre-Test
-
 This is our Pre-Test to evaluate your financial literacy. This test is designed to be taken near the beginning of a financial literacy course.
 
 **Which of the following portfolios would be considered the most “Diversified”?**

@@ -1,7 +1,5 @@
 # Credit Cards: Terms, Fees, and More
 
-# Credit Cards: Terms, Fees, and More
-
 **Credit cards** are one of the most common **types of credit** available. Specifically, a **bank credit card** is a form of **revolving credit**. This means you are given a credit limit and can borrow and repay funds repeatedly, as long as you stay under that limit. This is different from a **consumer loan** (like a car loan or mortgage), which is a form of installment credit where you borrow a fixed amount once and pay it back in set payments over a specific time. All credit card purchases are made using this revolving loan; you borrow money from your credit card issuer and pay it back later, plus interest.
 
 ## 5 Ways to Use Your Credit Card Responsibly

@@ -1,7 +1,3 @@
-# Rules
-
-### Rules
-
 ##### Personal Finance Lab Rules
 
 **1. Registration Period** -

@@ -1,7 +1,5 @@
 # Mortgage Options for First-Time Homebuyers
 
-# Mortgage Options for First-Time Homebuyers
-
 A mortgage is the largest **consumer loan** most people will ever take on. It is a form of installment credit used to purchase property. Buying a home not only saves money on rent, but is a serious asset that can appreciate over time. Since homes are so expensive, (almost) no-one buys them in cash. Instead, homes are typically purchased with a special type of loan, called a “Mortgage”.
 
 ## What is a Mortgage?

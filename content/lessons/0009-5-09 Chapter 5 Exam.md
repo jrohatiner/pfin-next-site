@@ -1,9 +1,4 @@
 # 5-09 Chapter 5 Exam
-
-Listen To This Lesson
-
-## 5-09 Chapter 5 Exam
-
 **If you have two stocks, one gaining value and the other losing, what should your first reaction be?**
 
 |  |  |

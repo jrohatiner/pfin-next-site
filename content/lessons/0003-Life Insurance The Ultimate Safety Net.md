@@ -1,7 +1,5 @@
 # Life Insurance: The Ultimate Safety Net
 
-# Life Insurance: The Ultimate Safety Net
-
 Life insurance is a type of insurance designed to pay a sum of money to a beneficiary if the insured person dies. These policies were originally created so that if the main income earner of a household dies, the payout from the policy could be used to support his or her family. Over the last 50 years, life insurance policies have evolved in both form and function, and now often include an investment component and the ability to use the policy’s cash value during the insured’s lifetime.
 
 ## How Does Life Insurance Work?

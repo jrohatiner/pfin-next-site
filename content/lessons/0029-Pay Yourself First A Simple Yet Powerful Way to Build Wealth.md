@@ -1,7 +1,5 @@
 # Pay Yourself First: A Simple Yet Powerful Way to Build Wealth
 
-# Pay Yourself First: A Simple Yet Powerful Way to Build Wealth
-
 When you’re getting started with managing your personal finances, it can be complicated to stay on top of your bills, make sure you have the right insurance and that your credit score is healthy.
 
 Juggling the different aspects of your finances usually means that saving and investing takes a back seat to everything else on your plate. This is one of the reasons why so few people under the age of 35 have any real savings. Luckily, there is one easy saving strategy you can use to make sure your savings are always growing, **Pay Yourself First**.

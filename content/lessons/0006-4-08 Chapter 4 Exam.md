@@ -1,9 +1,5 @@
 # 4-08 Chapter 4 Exam
 
-Listen To This Lesson
-
-## 4-08 Chapter 4 Exam
-
 **An investor is getting ready to put their first $1000 in savings to work, but this money is important to reserve as a cushion in case they need it for a real-life emergency. What kind of investment should they focus on?**
 
 |  |  |
