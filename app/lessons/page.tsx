@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getAllLessons } from "@/lib/content-registry";
+import { getAllLessons } from "@/lib/content";
 
-export default function LessonsPage() {
-  const lessons = getAllLessons();
+export default async function LessonsPage() {
+  const lessons = await getAllLessons();
 
   return (
     <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
@@ -12,7 +12,7 @@ export default function LessonsPage() {
       ) : (
         <ul>
           {lessons.map((lesson) => (
-            <li key={lesson.id}>
+            <li key={lesson.filename}>
               <Link href={`/lessons/${lesson.slug}`}>{lesson.title}</Link>
             </li>
           ))}
