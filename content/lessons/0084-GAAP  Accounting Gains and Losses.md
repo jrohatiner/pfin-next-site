@@ -1,7 +1,5 @@
 # GAAP – Accounting Gains and Losses
 
-# GAAP – Accounting Gains and Losses
-
 Revenue and Gains are related fields related to the income a company receives. The main difference between them is the source of the income.
 
 ### Revenue

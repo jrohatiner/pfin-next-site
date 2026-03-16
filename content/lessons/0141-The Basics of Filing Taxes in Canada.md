@@ -1,7 +1,5 @@
 # The Basics of Filing Taxes in Canada
 
-# The Basics of Filing Taxes in Canada
-
 ## What is income tax?
 
  Income tax is the tax you pay on your income, typically deducted directly from your paycheque. Every individual who earns income in Canada is obligated to pay income tax.

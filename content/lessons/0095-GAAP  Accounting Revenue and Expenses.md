@@ -1,6 +1,4 @@
-# GAAP – Accounting Revenue and Expenses
-
-## GAAP – Accounting Revenue and Expenses
+# GAAP – Accounting Revenue and Expenses]
 
 One of the first challenges auditors and regulators faced when developing the Generally Accepted Accounting Principles (GAAP) was trying to standardize how companies account for their revenues and expenses. Before GAAP, companies had (more or less) free reign on how and when revenue and expenses were reported, leading to general confusion when trying to compare balance sheets and income statements between companies. Today, all companies need to follow these general guidelines.
 

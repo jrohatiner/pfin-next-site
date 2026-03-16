@@ -1,7 +1,5 @@
 # What is Wealth?
 
-# What is Wealth?
-
 ## Definition of Wealth
 
 “Wealth” means having an abundance of something desirable. This can be tangible, like money and property, or intangible, like good health or freedom.

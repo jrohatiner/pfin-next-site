@@ -1,7 +1,5 @@
 # Debt Relief: Is Consolidation the Answer?
 
-# Debt Relief: Is Consolidation the Answer?
-
 If you start falling seriously behind on your bills, simple prioritization and negotiation may not be enough to help you catch up on your debt.  Even in this situation, you still have some options available to keep your finances under control.  One of the most straight-forward options is **debt** **consolidation**.
 
 ## When to Consider Debt Consolidation

@@ -1,7 +1,5 @@
 # How Companies Manage Their Human Resources
 
-# How Companies Manage Their Human Resources
-
 The Human Resources department at a business is in charge of everything from hiring and firing employees, organizing and implementing training programs, resolving internal conflicts, determining the pay scales, and everything in between.
 
 ## Human Resources Role

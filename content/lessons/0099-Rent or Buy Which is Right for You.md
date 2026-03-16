@@ -1,7 +1,5 @@
 # Rent or Buy: Which is Right for You?
 
-# Rent or Buy: Which is Right for You?
-
 The biggest expense most people have is the place they live. One of the biggest decisions young people face is whether to buy their home, or continue to rent. Conventional wisdom says that buying will pay off in the long-term, but believe it or not, this is not always the case!
 
 If you used the [car loan calculator](/content/index?url=car-loan-calculator-2) to see what kind of loan you can afford with your budget, you can use the same numbers to figure out if you should buy or lease your vehicle too! This will give you an idea of where your personal cut-off would be for both major purchases.

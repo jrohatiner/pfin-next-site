@@ -1,7 +1,5 @@
 # Pricing Strategies
 
-## Pricing Strategies
-
 One of the most crucial aspects of developing a marketing strategy is determining an approach to pricing. A company could have a great product and a fantastic promotion campaign, but could still fail if the price isn’t right for customers. On one hand, high prices could repel value-seeking consumers and could result in poor sales and low profits. However, prices that are too low could mean narrower margins that could outweigh any boost in additional sales. The key is to select a strategy that fits the company’s product, their competitive environment, and their customer base.
 
 This article will discuss how the forces of supply and demand impact pricing and the concept of price elasticity, cover some of the most common pricing strategies along with scenarios in which they are typically applied, and finally touch on how technological developments have impacted price determination.

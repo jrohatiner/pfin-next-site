@@ -1,7 +1,5 @@
 # Planning Your Career Path
 
-# Planning Your Career Path
-
 There is a world of difference between “getting a job” and “starting a career”, and it comes down to more than just salary. The road to Career Development is all about defining your goals. You need to understand what actions you can take to open doors for tomorrow and build a path to get you from where you are today to where you really want to be.
 
 ## What is a Career?

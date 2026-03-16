@@ -1,7 +1,5 @@
 # How to Research &amp; Compare Stocks (FT)
 
-# How to Research & Compare Stocks
-
 When you first set out to build a portfolio, it can be overwhelming to choose your first stock.
 
 In this activity, we will walk through conducting some basic research on a company you find interesting, and learn how to compare it against another company in the same sector to determine which would be a better choice to add to your portfolio for your first trades.

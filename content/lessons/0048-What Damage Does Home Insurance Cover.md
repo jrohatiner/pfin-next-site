@@ -1,7 +1,5 @@
 # What Damage Does Home Insurance Cover?
 
-# What Damage Does Home Insurance Cover?
-
 Homeowner’s Insurance is a broad type of insurance coverage designed to cover a home, its contents, and the property it sits on. This insurance is very broad, wrapping many different types of coverage into one package.
 
 If you want to take out a mortgage on a home, the institution you borrow from will probably require you to have some level of homeowner’s insurance. They want to make sure that if there is a disaster, they do not lose their collateral on the loan. Homeowner’s insurance is like a broader form of renter’s insurance – it is a combination of property insurance and liability insurance.

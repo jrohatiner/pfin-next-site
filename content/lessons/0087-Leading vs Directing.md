@@ -1,7 +1,5 @@
 # Leading vs Directing
 
-## Leading vs Directing
-
 Leading and directing are important management functions, but usually do not appear in the main job description. A great manager needs to be able to both lead their team and direct their operations – failing either of these roles is a recipe for disaster.
 
 ## Leading vs Directing

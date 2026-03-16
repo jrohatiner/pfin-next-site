@@ -1,7 +1,5 @@
 # How to Plan for Business Success
 
-## How to Plan for Business Success
-
 Planning is an important management function because it helps managers prepare for the short term and long term challenges and opportunities that a business faces every day. Planning plays a crucial part in creating a business plan and strategic plan in that it reinforces a company’s mission, visions, and goals that are used to develop and implement strategy, competitive advantage, and achieve effectiveness and efficiency in how a business operates.
 
 ## What Planning Means

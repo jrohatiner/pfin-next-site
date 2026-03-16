@@ -1,7 +1,5 @@
 # Student Loan Repayment Calculator
 
-# Student Loan Repayment Calculator
-
 Figuring out how to pay back student loans can feel overwhelming. The plan you choose affects your monthly budget, the total interest you’ll pay, and how long you’ll be in debt. This calculator is designed to make that choice clearer. It lets you explore different repayment strategies to find the one that best fits your financial future, and even shows you how making extra payments can help you become debt-free faster.
 
 ## How to Use the Calculator

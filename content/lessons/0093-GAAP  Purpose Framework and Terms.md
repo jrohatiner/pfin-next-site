@@ -1,7 +1,5 @@
 # GAAP – Purpose, Framework, and Terms
 
-## GAAP – Purpose, Framework, and Terms
-
 What are the objectives of financial statements? How can accountants best meet these objectives? These are the very questions that the Federal Accounting Standards Board (FASB) set out to address in 1976 when they began developing the conceptual framework. FASB’s goal was to identify the objectives and concepts that govern the preparation and presentation of financial reporting. In other words, to provide a backbone for the financial accounting system. The conceptual framework creates consistency for the standard setters, preparers, managers, auditors, and other users of financial statements in their jobs. These different groups use the conceptual framework to set rules, follow rules, ensure those rules are being followed, and make decisions with confidence.
 
 ## The objective of financial reporting

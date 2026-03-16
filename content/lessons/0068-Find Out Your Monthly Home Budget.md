@@ -1,7 +1,5 @@
 # Find Out Your Monthly Home Budget
 
-# Find Out Your Monthly Home Budget
-
 Most people think that the difficult part of personal finance is building your monthly budget and sticking to it. There are tons of different expenses and payments to consider, so we put all the big ones in one place! This tool will also help you see exactly how much you can set aside for savings every month!
 
 If you already used our [buy vs lease calculator](/content/index?url=buy-vs-lease-calculator) to see how much your home payments will be, use this calculator to build a budget around your known expenses.

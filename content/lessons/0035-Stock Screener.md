@@ -1,7 +1,5 @@
 # Stock Screener
 
-# Stock **Screener**
-
 ---
 
 [Stock Screener](https://www.tradingview.com/screener/?utm_source=app.personalfinancelab.com&utm_medium=widget_new&utm_campaign=screener) by TradingView

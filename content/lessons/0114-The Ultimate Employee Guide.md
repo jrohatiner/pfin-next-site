@@ -1,7 +1,5 @@
 # The Ultimate Employee Guide
 
-# The Ultimate Employee Guide
-
 When you start your first job, the number one thing everyone cares about is the salary (or hourly rate). What big bucks will you be earning? You will be surprised to find that this number is just a small part of the total compensation package offered by most employers.
 
 ## Employees versus Contractors

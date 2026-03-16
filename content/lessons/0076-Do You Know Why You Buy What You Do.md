@@ -1,7 +1,5 @@
 # Do You Know Why You Buy What You Do?
 
-## Do You Know Why You Buy What You Do?
-
 Consumers play an integral part in the marketplace. They are the ones who purchase the products, and largely inform the kinds of products that are produced (demanded).  This is where the concept of consumer behavior comes in: what drives customers’ purchasing decisions, and how do they use the products and services that they buy.  It is important to look at how a consumer behaves by looking at the different ways they are influenced.
 
 ## Different characteristics of Consumers

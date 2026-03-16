@@ -1,7 +1,5 @@
 # Payroll Best Practices
 
-## Payroll Best Practices
-
 Most the taxes paid are through paychecks, so a large part of payroll accounting is properly accounting for all taxes.
 
 Most people are familiar with their annual personal tax return, but payroll tax filing works a bit differently. Payroll is run weekly, bi-weekly, monthly, or even semi-monthly, so for each pay cycle, taxes need to be calculated and reported. All tax payments need to be calculated for each pay cycle, then filed once per quarter.

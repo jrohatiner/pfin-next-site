@@ -1,7 +1,5 @@
 # Don’t Let Disability Derail Your Finances
 
-# Don’t Let Disability Derail Your Finances
-
 Most people overestimate the cost and underestimate the need for disability insurance. Many people live paycheck to paycheck and lack any significant real savings. They don’t have robust rainy day or emergency funds to cover the cost of an unexpected expense. In fact, loss of income and medical expenses are two top reasons that people cite when filing for bankruptcy. And that’s where **Disability Insurance** comes in, providing critical financial protection in the event that you are unable to work due to sickness or injury.
 
 ![](/images/08636ca35a26d172.png)

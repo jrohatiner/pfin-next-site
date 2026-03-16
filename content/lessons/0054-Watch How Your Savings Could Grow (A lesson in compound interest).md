@@ -1,7 +1,5 @@
 # Watch How Your Savings Could Grow (A lesson in compound interest)
 
-# Watch How Your Savings Could Grow (A lesson in compound interest)
-
 The first thing to consider with all personal finance is the idea of compound interest! This is what separates the “Piggy Bank” savers from the Warren Buffets; making use of interest compounding is how you can really make your savings grow!
 
 If you have already used our **[Investment Return Calculator](/content/index?url=advanced-investment-return-calculator)**, you can use this calculator to see how different types of compounding will affect your overall return!

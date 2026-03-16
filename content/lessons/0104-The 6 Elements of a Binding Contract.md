@@ -1,7 +1,5 @@
 # The 6 Elements of a Binding Contract
 
-# The 6 Elements of a Binding Contract
-
 ![](/images/db7b7e9f30b786db.jpg)
 
 A contract is a legally binding agreement between two parties (people, companies, or both) in which something of value is exchanged. One party promises to do something in return for a something else. Since a contract is legally binding, if one party does not do what was agreed upon, the other party can sue them in court to either enforce the contract or receive compensation. Contracts are involved in personal and business dealings, so it is important that you understand the rules governing them.

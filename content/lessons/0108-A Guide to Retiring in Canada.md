@@ -1,7 +1,5 @@
 # A Guide to Retiring in Canada
 
-# **A Guide to Retiring in Canada**
-
 Embarking on a journey towards retirement in Canada requires careful consideration and proactive financial strategies. In this guide, we will explore various elements of retirement planning in Canada, offering insights into pension programs, savings options, and employer-assisted plans.
 
 ## **Old Age Security Pension (OAS)**

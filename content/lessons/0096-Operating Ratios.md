@@ -1,7 +1,4 @@
 # Operating Ratios
-
-# Operating Ratios
-
 Operating ratios are a class of ratios that are meant to analyze how well a company is using their assets. Specifically, these ratios show how well a company utilizes its assets to create revenue. Like many of the ratios that are used in financial analysis, operating ratios are complex ratios. Some use simple measures in their numerators and denominators, such as COGS (Cost of Goods Sold) and revenue, but many incorporate other ratios into the calculation. Therefore, it is crucial to have a firm grasp on the most basic ratios, such as working capital. Like all ratios, these are only meaningful when compared across time, and to the industry norm.
 
 ## Sample Financial Statements

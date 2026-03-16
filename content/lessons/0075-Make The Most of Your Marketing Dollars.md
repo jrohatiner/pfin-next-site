@@ -1,7 +1,5 @@
 # Make The Most of Your Marketing Dollars
 
-## Make The Most of Your Marketing Dollars
-
 Planning advertising for any business is nothing to be taken lightly. Advertising, after all, is the method by which a business gets its message out to the world. How, and how well, a business advertises its products or services can, and does, make the difference between business success and business failure. Thus, planning and evaluating advertising are critical business activities.
 
 Most successful business advertising results from four basic considerations: connecting with the customer, adhering to legal and ethical norms, the methods of communication with customers and measuring advertising effectiveness.

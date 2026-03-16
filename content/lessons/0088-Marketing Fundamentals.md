@@ -1,7 +1,5 @@
 # Marketing Fundamentals
 
-## Marketing Fundamentals
-
 Marketing is a word often thrown around as an umbrella term for a wide variety of functions within organizations, ranging from the running of social media accounts to inside sales, and anything in between.
 
 ## Marketing and Value Proposition

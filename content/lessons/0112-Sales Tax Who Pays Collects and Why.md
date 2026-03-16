@@ -1,7 +1,5 @@
 # Sales Tax: Who Pays, Collects, and Why?
 
-# Sales Tax: Who Pays, Collects, and Why?
-
 ![sales tax](/images/2b04403a48140d8d.jpg)
 
 “Sales Tax” is a tax that is charged on goods sold to end customers, the final user of that product. The sales tax is a set percentage of the sale price of the goods sold, and individual states set their own sales tax percentages. [Most states use sales taxes](https://taxfoundation.org/data/all/state/2024-sales-taxes/) to generate revenue to pay for the state’s operations, but some charge no sales tax at all. These are Alaska, Delaware, Montana, New Hampshire, and Oregon. Many cities also impose a sales tax, so the actual amount of sales tax you pay for a purchase will vary quite a bit if you travel.

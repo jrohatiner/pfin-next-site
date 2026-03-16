@@ -1,7 +1,5 @@
 # Cash Flow Analysis
 
-# Cash Flow Analysis
-
 Cash flow is a concept in accounting that refers to the spending or receiving of cash by an organization. For a given period, cash flow is calculated by ending cash balance less starting cash balance. It is important not to confuse cash flow with earnings, as cash flow is related to solvency (or how well a business can pay its immediate debts) and not necessarily profitability. For example, a firm may have millions in revenue, but if accounts receivable are not collected, it is not realized as a cash inflow. Good management and financial modeling are crucial to a firm having healthy cash flows and remaining solvent.
 
 ## Cash Flow in Financial Statements

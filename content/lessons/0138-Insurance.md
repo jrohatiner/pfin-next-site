@@ -1,7 +1,5 @@
 # Insurance
 
-## Insurance
-
 The idea behind insurance is that random bad thing can happen to just about anyone, and sometimes those random things are expensive to resolve.  Car crashes, medical emergencies, and flooding can destroy your personal saving and investing accounts if they happen to you and you’re not prepared to deal with them.
 
 ## How Does Insurance Work?

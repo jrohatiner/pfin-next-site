@@ -1,7 +1,5 @@
 # How Bankruptcy Ruins Your Credit
 
-# How Bankruptcy Ruins Your Credit
-
 If you find yourself significantly behind on your bills and all other attempts to manage debt have proven futile, the last resort is declaring bankruptcy.
 
 ## What is Bankruptcy?

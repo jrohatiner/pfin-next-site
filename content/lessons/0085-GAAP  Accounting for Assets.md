@@ -1,7 +1,5 @@
 # GAAP – Accounting for Assets
 
-## GAAP – Accounting for Assets
-
 ### *Facets of Assets*
 
 How much is someone worth? One way to think about it could be to add up assets, or everything a person owns that holds financial value. First, think of everyday items like cash, a car, a computer, and perhaps money stored in a savings or investment account. However, there are some less obvious items to include as well. What if someone loaned a friend $20 and he/she promised to pay it back next Friday? Assuming they can trust this person to pay them back, that $20 should also be included on the list of assets.

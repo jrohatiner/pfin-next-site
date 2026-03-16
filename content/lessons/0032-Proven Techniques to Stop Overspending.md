@@ -1,7 +1,5 @@
 # Proven Techniques to Stop Overspending
 
-## Proven Techniques to Stop Overspending
-
 Building a budget or a spending plan is tough. Sticking to the plan is even tougher. Thankfully, there are a few strategies designed to help you develop positive habits. These strategies will help you learn to save, stick with your budget, plan for emergencies, and control your impulse spending.
 
 ## Budgeting Strategies

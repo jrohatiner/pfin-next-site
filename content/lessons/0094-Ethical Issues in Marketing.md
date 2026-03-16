@@ -1,7 +1,5 @@
 # Ethical Issues in Marketing
 
-## Ethical Issues in Marketing
-
 Ethics are a code of values and principles that govern the actions of a person regarding what is right versus what is wrong. They determine our behavior when faced with a moral dilemma. Morals are subjective, in that they vary from person to person depending on their point of view, and the ethical standards of their culture. Ethical practices, as well as unethical practices, can have an effect on marketing, and in some instances, unethical behavior can lead to government intervention. Also, our ethical choices and moral philosophies are relative to marketing practices.
 
 ## Ethical Issues and Their Impact on Marketing

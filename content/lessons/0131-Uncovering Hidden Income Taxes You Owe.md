@@ -1,7 +1,4 @@
 # Uncovering Hidden Income Taxes You Owe
-
-## Uncovering Hidden Income Taxes You Owe
-
 Everyone loves getting tax breaks, but what can really impact your finances is forgetting about tax additions – extra taxes and fees you owe for income that should be reported when you file your income taxes. Forgetting to include this income and not paying the taxes owed on this amount will hurt you in the long run. Taxpayers are charged interest on the outstanding tax balance from the date taxes are due (April 15) until the taxes are paid in full.
 
 This means if you fail to include all of your tax additions in your annual return and get selected for an audit later, you will be charged interest for the entire period between when your taxes were due and when the error was found. Understanding the additional taxes you might owe and the tax credits and deductions you may qualify for are both important in keeping your finances healthy.
