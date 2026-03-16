@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getAllLessons } from "@/lib/content";
 
-export default async function LessonsPage() {
-  const lessons = await getAllLessons();
+export default function LessonsPage() {
+  const lessons = getAllLessons();
 
   return (
     <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>

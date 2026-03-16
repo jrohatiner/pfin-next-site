@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getAllVideos } from "@/lib/content";
 
-export default async function VideosPage() {
-  const videos = await getAllVideos();
+export default function VideosPage() {
+  const videos = getAllVideos();
 
   return (
     <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>

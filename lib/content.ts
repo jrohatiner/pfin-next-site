@@ -1,8 +1,6 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { remark } from "remark";
-import html from "remark-html";
 
 const contentDir = path.join(process.cwd(), "content");
 const lessonsDir = path.join(contentDir, "lessons");
@@ -11,7 +9,7 @@ const videosDir = path.join(contentDir, "videos");
 export interface ContentItem {
   slug: string;
   title: string;
-  contentHtml: string;
+  content: string; // Raw markdown content for MDX
   filename: string;
 }
 
@@ -24,12 +22,7 @@ function slugify(filename: string): string {
     .replace(/(^-|-$)/g, ""); // Remove leading/trailing dashes
 }
 
-async function processMarkdown(content: string): Promise<string> {
-  const result = await remark().use(html).process(content);
-  return result.toString();
-}
-
-async function loadAllFromDir(dir: string): Promise<ContentItem[]> {
+function loadAllFromDir(dir: string): ContentItem[] {
   if (!fs.existsSync(dir)) return [];
 
   const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md"));
@@ -44,10 +37,9 @@ async function loadAllFromDir(dir: string): Promise<ContentItem[]> {
     const titleMatch = content.match(/^##\s+(.+)$/m);
     const title = titleMatch ? titleMatch[1].trim() : filename.replace(/\.md$/, "");
 
-    const contentHtml = await processMarkdown(content);
     const slug = slugify(filename);
 
-    items.push({ slug, title, contentHtml, filename });
+    items.push({ slug, title, content, filename });
   }
 
   // Sort alphabetically by title
@@ -56,8 +48,8 @@ async function loadAllFromDir(dir: string): Promise<ContentItem[]> {
   return items;
 }
 
-export async function getAllLessons(): Promise<ContentItem[]> {
-  const items = await loadAllFromDir(lessonsDir);
+export function getAllLessons(): ContentItem[] {
+  const items = loadAllFromDir(lessonsDir);
   // Remove duplicates by keeping only the first occurrence of each title
   const seenTitles = new Set<string>();
   return items.filter((item) => {
@@ -69,8 +61,8 @@ export async function getAllLessons(): Promise<ContentItem[]> {
   });
 }
 
-export async function getAllVideos(): Promise<ContentItem[]> {
-  const items = await loadAllFromDir(videosDir);
+export function getAllVideos(): ContentItem[] {
+  const items = loadAllFromDir(videosDir);
   // Remove duplicates by keeping only the first occurrence of each title
   const seenTitles = new Set<string>();
   return items.filter((item) => {
@@ -82,12 +74,12 @@ export async function getAllVideos(): Promise<ContentItem[]> {
   });
 }
 
-export async function getLessonBySlug(slug: string): Promise<ContentItem | null> {
-  const lessons = await loadAllFromDir(lessonsDir);
+export function getLessonBySlug(slug: string): ContentItem | null {
+  const lessons = loadAllFromDir(lessonsDir);
   return lessons.find((l) => l.slug === slug) ?? null;
 }
 
-export async function getVideoBySlug(slug: string): Promise<ContentItem | null> {
-  const videos = await loadAllFromDir(videosDir);
+export function getVideoBySlug(slug: string): ContentItem | null {
+  const videos = loadAllFromDir(videosDir);
   return videos.find((v) => v.slug === slug) ?? null;
 }

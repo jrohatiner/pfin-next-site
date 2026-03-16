@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getLessonBySlug } from "@/lib/content";
+import { MDXRenderer } from "@/components/mdx-renderer";
 
 type Props = {
   params: Promise<{
@@ -9,13 +10,13 @@ type Props = {
 
 export default async function LessonDetailPage({ params }: Props) {
   const { slug } = await params;
-  const lesson = await getLessonBySlug(slug);
+  const lesson = getLessonBySlug(slug);
 
   if (!lesson) return notFound();
 
   return (
-    <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-      <div dangerouslySetInnerHTML={{ __html: lesson.contentHtml }} />
+    <main className="p-8 max-w-4xl mx-auto">
+      <MDXRenderer source={lesson.content} />
     </main>
   );
 }
