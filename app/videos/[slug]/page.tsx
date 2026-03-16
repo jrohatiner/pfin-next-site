@@ -13,9 +13,17 @@ export default async function VideoDetailPage({ params }: Props) {
 
   if (!video) return notFound();
 
-  const VideoContent = await loadVideoComponent(video.id);
+  const VideoContent = await loadVideoComponent(slug);
 
-  if (!VideoContent) return notFound();
+  if (!VideoContent) {
+    // Show a placeholder if no component is registered yet
+    return (
+      <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
+        <h1>{video.title}</h1>
+        <p>Content coming soon. This video component has not been created yet.</p>
+      </main>
+    );
+  }
 
   return (
     <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
