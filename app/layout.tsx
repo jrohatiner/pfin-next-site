@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Personal Finance Lab",
+  title: "IFi Labs",
   description: "Learn personal finance with interactive lessons and videos",
 };
 
