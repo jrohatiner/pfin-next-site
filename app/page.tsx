@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <main className="home-page">
       <section className="hero">
-        <h1>Welcome to Personal Finance Lab</h1>
+        <h1>Welcome to IFi Labs</h1>
         <p>Master your finances with interactive lessons and educational videos.</p>
       </section>
 
