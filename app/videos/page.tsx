@@ -12,7 +12,7 @@ export default async function VideosPage() {
       ) : (
         <ul>
           {videos.map((video) => (
-            <li key={video.slug}>
+            <li key={video.filename}>
               <Link href={`/videos/${video.slug}`}>{video.title}</Link>
             </li>
           ))}
