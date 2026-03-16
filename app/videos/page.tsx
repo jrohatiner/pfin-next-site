@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getAllVideos } from "@/lib/content";
+import { getAllVideos } from "@/lib/content-registry";
 
-export default async function VideosPage() {
-  const videos = await getAllVideos();
+export default function VideosPage() {
+  const videos = getAllVideos();
 
   return (
     <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
@@ -12,7 +12,7 @@ export default async function VideosPage() {
       ) : (
         <ul>
           {videos.map((video) => (
-            <li key={video.filename}>
+            <li key={video.id}>
               <Link href={`/videos/${video.slug}`}>{video.title}</Link>
             </li>
           ))}

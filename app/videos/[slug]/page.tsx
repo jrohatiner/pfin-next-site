@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getVideoBySlug } from "@/lib/content";
+import { getVideoBySlug, loadVideoComponent } from "@/lib/content-registry";
 
 type Props = {
   params: Promise<{
@@ -9,14 +9,18 @@ type Props = {
 
 export default async function VideoDetailPage({ params }: Props) {
   const { slug } = await params;
-  const video = await getVideoBySlug(slug);
+  const video = getVideoBySlug(slug);
 
   if (!video) return notFound();
+
+  const VideoContent = await loadVideoComponent(video.id);
+
+  if (!VideoContent) return notFound();
 
   return (
     <main style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
       <h1>{video.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: video.contentHtml }} />
+      <VideoContent />
     </main>
   );
 }
