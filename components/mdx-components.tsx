@@ -68,6 +68,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     // Style horizontal rules
     hr: () => <hr className="my-8 border-border" />,
+    // Style images - guard against empty src
+    img: ({ src, alt, ...props }) => {
+      if (!src) return null;
+      return (
+        <img
+          src={src}
+          alt={alt || ""}
+          className="max-w-full h-auto rounded-lg my-4"
+          {...props}
+        />
+      );
+    },
     // Allow custom components to be passed in
     ...components,
   };

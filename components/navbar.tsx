@@ -5,7 +5,7 @@ export function Navbar() {
     <nav className="navbar">
       <div className="navbar-content">
         <Link href="/" className="navbar-brand">
-          Personal Finance Lab
+          IFi Labs
         </Link>
         <div className="navbar-links">
           <Link href="/lessons">Lessons</Link>
