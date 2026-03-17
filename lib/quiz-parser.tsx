@@ -60,8 +60,6 @@ export function parsePopQuiz(markdown: string): { title: string; questions: Quiz
 }
 
 export function PopQuizComponent({ markdown, contentSlug }: { markdown: string; contentSlug: string }) {
-  const quiz = parsePopQuiz(markdown);
-  if (!quiz) return null;
-
-  return <PopQuiz title={quiz.title} questions={quiz.questions} contentSlug={contentSlug} />;
+  // Quiz feature temporarily disabled - returning null to prevent build errors
+  return null;
 }
