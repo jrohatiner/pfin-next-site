@@ -1,7 +1,5 @@
 # What is Money?
 
-
-
 *[Can’t view on YouTube? Click Here](https://learn.stocktrak.com/wp-content/uploads/2023/10/What-is-Money_.mp4)*
 
 Many years ago, before the concept of money existed, if an individual needed something they couldn’t provide for themselves, they would exchange something they owned with someone who had it. This was called **bartering**. Every item would be traded for a different item. For example, if I needed eggs, I would find a chicken farmer, and trade their eggs for something I had, such as milk or cheese.
