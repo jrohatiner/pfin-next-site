@@ -8,7 +8,7 @@ export interface QuizQuestion {
 
 // Parse Pop Quiz markdown format into structured data
 export function parsePopQuiz(markdown: string): { title: string; questions: QuizQuestion[] } | null {
-  const quizMatch = markdown.match(/^###\s+Pop Quiz(.*?)(?=\n###|\Z)/ms);
+  const quizMatch = markdown.match(/^###\s+Pop Quiz([\s\S]*?)(?=\n###|$)/m);
   if (!quizMatch) return null;
 
   const quizContent = quizMatch[1];
