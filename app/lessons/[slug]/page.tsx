@@ -22,7 +22,7 @@ export default async function LessonDetailPage({ params }: Props) {
       {lesson.isHtml ? (
         <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: lesson.content }} />
       ) : (
-        <MDXRenderer source={lesson.content} />
+        <MDXRenderer source={lesson.content} contentSlug={slug} />
       )}
       <ContentNav
         prevSlug={nav.prev?.slug}
