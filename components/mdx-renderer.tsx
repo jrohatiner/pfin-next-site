@@ -16,6 +16,8 @@ export function MDXRenderer({ source, contentSlug = "" }: MDXRendererProps) {
   const hasQuiz = source.toLowerCase().includes("pop quiz");
   const quizData = hasQuiz ? parsePopQuiz(source) : null;
   
+  console.log("[v0] MDXRenderer - hasQuiz:", hasQuiz, "quizData:", quizData ? `${quizData.questions.length} questions` : "null", "contentSlug:", contentSlug);
+  
   return (
     <div className="prose prose-lg max-w-none">
       <MDXRemote 

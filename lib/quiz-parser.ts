@@ -5,10 +5,9 @@ export interface QuizQuestion {
 }
 
 // Parse Pop Quiz markdown format into structured data
-// Format: **Question text?** followed by a markdown table with options
 export function parsePopQuiz(markdown: string): { title: string; questions: QuizQuestion[] } | null {
-  // Find the Pop Quiz section
-  const quizMatch = markdown.match(/##\s*Pop Quiz([\s\S]*?)(?=\n##[^#]|$)/i);
+  // Find the Pop Quiz section (can be > ## Pop Quiz or ## Pop Quiz)
+  const quizMatch = markdown.match(/(?:>?\s*)?##?\s*Pop Quiz([\s\S]*?)(?=\n---|\n##[^#]|$)/i);
   if (!quizMatch) return null;
 
   const quizContent = quizMatch[1];
@@ -16,7 +15,7 @@ export function parsePopQuiz(markdown: string): { title: string; questions: Quiz
   const questions: QuizQuestion[] = [];
 
   // Split by bold question markers (**Question text?**)
-  const questionPattern = /\*\*([^*]+\?)\*\*/g;
+  const questionPattern = /\*\*([^*]+\??)\*\*/g;
   let match;
   const questionMatches: { question: string; index: number }[] = [];
 
@@ -31,21 +30,21 @@ export function parsePopQuiz(markdown: string): { title: string; questions: Quiz
 
     // Extract options from the table rows
     // Table format: |  | Option text |
-    const tableRowPattern = /\|\s*\|\s*([^|]+)\s*\|/g;
+    const tableRowPattern = /\|\s*\|\s*([^|\n]+)\s*\|/g;
     const options: string[] = [];
     let rowMatch;
 
     while ((rowMatch = tableRowPattern.exec(sectionContent)) !== null) {
       const optionText = rowMatch[1].trim();
       // Skip header separator rows (like | --- | --- |)
-      if (optionText && !optionText.match(/^-+$/)) {
+      if (optionText && !optionText.match(/^-+$/) && optionText.length > 1) {
         options.push(optionText);
       }
     }
 
     if (question && options.length > 0) {
-      // For now, set first option as correct (can be enhanced later)
-      questions.push({ question, options, correctAnswer: 0 });
+      // Default correctAnswer to last option (usually "All of the above" pattern)
+      questions.push({ question, options, correctAnswer: options.length - 1 });
     }
   }
 
