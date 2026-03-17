@@ -70,8 +70,12 @@ function loadAllFromDir(dir: string): ContentItem[] {
     items.push({ slug, title, content, filename, isHtml });
   }
 
-  // Sort alphabetically by title
-  items.sort((a, b) => a.title.localeCompare(b.title));
+  // Sort alphabetically by filename first, then by title
+  items.sort((a, b) => {
+    const fileA = a.filename.toLowerCase();
+    const fileB = b.filename.toLowerCase();
+    return fileA.localeCompare(fileB, undefined, { numeric: true });
+  });
 
   return items;
 }

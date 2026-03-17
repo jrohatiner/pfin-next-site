@@ -186,3 +186,119 @@ main {
   border-top: 1px solid #e0e0e0;
   text-align: center;
 }
+
+/* Pop Quiz Styles */
+.pop-quiz {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.pop-quiz h3 {
+  margin-top: 0;
+  color: #1a1a2e;
+}
+
+.quiz-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.quiz-question {
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.question-text {
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.quiz-option:hover {
+  background: #f0f0f0;
+}
+
+.quiz-option input[type="checkbox"] {
+  cursor: pointer;
+  accent-color: #0b57d0;
+}
+
+.quiz-option span {
+  color: #333;
+}
+
+.quiz-submit {
+  background: #0b57d0;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+
+.quiz-submit:hover:not(:disabled) {
+  background: #0847a8;
+}
+
+.quiz-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.quiz-result {
+  background: #e8f5e9;
+  border: 2px solid #4caf50;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.quiz-result h3 {
+  color: #2e7d32;
+  margin-top: 0;
+}
+
+.quiz-result p {
+  color: #1b5e20;
+  font-size: 1.1rem;
+}
+
+.quiz-result button {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.quiz-result button:hover {
+  background: #388e3c;
+}
