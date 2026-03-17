@@ -1,6 +1,6 @@
 # What is Money?
 
-## What is Money?
+
 
 *[Can’t view on YouTube? Click Here](https://learn.stocktrak.com/wp-content/uploads/2023/10/What-is-Money_.mp4)*
 
