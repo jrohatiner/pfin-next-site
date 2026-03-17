@@ -19,7 +19,11 @@ export default async function LessonDetailPage({ params }: Props) {
 
   return (
     <main className="p-8 max-w-4xl mx-auto">
-      <MDXRenderer source={lesson.content} />
+      {lesson.isHtml ? (
+        <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: lesson.content }} />
+      ) : (
+        <MDXRenderer source={lesson.content} />
+      )}
       <ContentNav
         prevSlug={nav.prev?.slug}
         prevTitle={nav.prev?.title}

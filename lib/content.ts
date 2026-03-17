@@ -9,14 +9,15 @@ const videosDir = path.join(contentDir, "videos");
 export interface ContentItem {
   slug: string;
   title: string;
-  content: string; // Raw markdown content for MDX
+  content: string; // Raw content (markdown or HTML)
   filename: string;
+  isHtml: boolean; // True if content is HTML, false if markdown
 }
 
 function slugify(filename: string): string {
   return filename
     .replace(/^\d+-/, "") // Remove leading numbers and dash
-    .replace(/\.md$/, "") // Remove .md extension
+    .replace(/\.(md|html)$/, "") // Remove .md or .html extension
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric with dashes
     .replace(/(^-|-$)/g, ""); // Remove leading/trailing dashes
@@ -25,21 +26,48 @@ function slugify(filename: string): string {
 function loadAllFromDir(dir: string): ContentItem[] {
   if (!fs.existsSync(dir)) return [];
 
-  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md"));
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md") || f.endsWith(".html"));
   const items: ContentItem[] = [];
+  const slugsSeen = new Set<string>();
 
   for (const filename of files) {
     const filePath = path.join(dir, filename);
     const fileContent = fs.readFileSync(filePath, "utf-8");
-    const { content } = matter(fileContent);
-
-    // Extract title from first ## heading
-    const titleMatch = content.match(/^##\s+(.+)$/m);
-    const title = titleMatch ? titleMatch[1].trim() : filename.replace(/\.md$/, "");
-
+    const isHtml = filename.endsWith(".html");
     const slug = slugify(filename);
 
-    items.push({ slug, title, content, filename });
+    // If we've already seen this slug, prefer HTML over MD
+    if (slugsSeen.has(slug)) {
+      if (isHtml) {
+        // Replace the existing MD entry with HTML
+        const existingIndex = items.findIndex((i) => i.slug === slug);
+        if (existingIndex !== -1) {
+          items.splice(existingIndex, 1);
+        }
+      } else {
+        // Skip this MD file since we already have an entry (possibly HTML)
+        continue;
+      }
+    }
+    slugsSeen.add(slug);
+
+    let content: string;
+    let title: string;
+
+    if (isHtml) {
+      content = fileContent;
+      // Extract title from <h1>, <h2>, or <title> tag
+      const titleMatch = fileContent.match(/<h[12][^>]*>([^<]+)<\/h[12]>|<title>([^<]+)<\/title>/i);
+      title = titleMatch ? (titleMatch[1] || titleMatch[2]).trim() : filename.replace(/\.html$/, "");
+    } else {
+      const { content: mdContent } = matter(fileContent);
+      content = mdContent;
+      // Extract title from first ## heading
+      const titleMatch = mdContent.match(/^##\s+(.+)$/m);
+      title = titleMatch ? titleMatch[1].trim() : filename.replace(/\.md$/, "");
+    }
+
+    items.push({ slug, title, content, filename, isHtml });
   }
 
   // Sort alphabetically by title

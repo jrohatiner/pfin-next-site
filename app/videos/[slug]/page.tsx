@@ -19,7 +19,11 @@ export default async function VideoDetailPage({ params }: Props) {
 
   return (
     <main className="p-8 max-w-4xl mx-auto">
-      <MDXRenderer source={video.content} />
+      {video.isHtml ? (
+        <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: video.content }} />
+      ) : (
+        <MDXRenderer source={video.content} />
+      )}
       <ContentNav
         prevSlug={nav.prev?.slug}
         prevTitle={nav.prev?.title}
