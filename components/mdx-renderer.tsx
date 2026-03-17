@@ -1,7 +1,8 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { useMDXComponents } from "@/components/mdx-components";
 import remarkGfm from "remark-gfm";
-import { PopQuizComponent } from "@/lib/quiz-parser";
+import { parsePopQuiz } from "@/lib/quiz-parser";
+import { PopQuiz } from "@/components/pop-quiz";
 
 interface MDXRendererProps {
   source: string;
@@ -11,14 +12,12 @@ interface MDXRendererProps {
 export function MDXRenderer({ source, contentSlug = "" }: MDXRendererProps) {
   const components = useMDXComponents({});
   
-  // Check if content has Pop Quiz sections
-  const hasQuiz = source.includes("### Pop Quiz");
+  // Check if content has Pop Quiz sections and parse them
+  const hasQuiz = source.toLowerCase().includes("pop quiz");
+  const quizData = hasQuiz ? parsePopQuiz(source) : null;
   
   return (
     <div className="prose prose-lg max-w-none">
-      {hasQuiz && contentSlug && (
-        <PopQuizComponent markdown={source} contentSlug={contentSlug} />
-      )}
       <MDXRemote 
         source={source} 
         components={components}
@@ -28,6 +27,13 @@ export function MDXRenderer({ source, contentSlug = "" }: MDXRendererProps) {
           },
         }}
       />
+      {quizData && contentSlug && (
+        <PopQuiz 
+          title={quizData.title} 
+          questions={quizData.questions} 
+          contentSlug={contentSlug} 
+        />
+      )}
     </div>
   );
 }
