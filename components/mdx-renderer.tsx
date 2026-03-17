@@ -1,7 +1,7 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { useMDXComponents } from "@/components/mdx-components";
 import remarkGfm from "remark-gfm";
-import { PopQuizComponent } from "@/lib/quiz-parser";
+import { PopQuizComponent } from "@/lib/quiz-parser.tsx";
 
 interface MDXRendererProps {
   source: string;
