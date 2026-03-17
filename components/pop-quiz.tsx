@@ -18,15 +18,20 @@ export function PopQuiz({ title, questions, contentSlug }: PopQuizProps) {
   const [answers, setAnswers] = useState<number[]>(new Array(questions.length).fill(-1));
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [score, setScore] = useState<number | null>(null);
 
   const handleAnswer = (questionIndex: number, optionIndex: number) => {
+    if (submitted) return;
     const newAnswers = [...answers];
     newAnswers[questionIndex] = optionIndex;
     setAnswers(newAnswers);
   };
 
   const handleSubmit = async () => {
+    if (answers.includes(-1)) {
+      alert('Please answer all questions before submitting.');
+      return;
+    }
+    
     setLoading(true);
     try {
       const response = await fetch('/api/quiz/submit', {
@@ -41,63 +46,79 @@ export function PopQuiz({ title, questions, contentSlug }: PopQuizProps) {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        setScore(data.score);
         setSubmitted(true);
       } else {
-        alert('Failed to submit quiz');
+        console.error('Failed to submit quiz');
+        setSubmitted(true); // Still show completion even if save fails
       }
     } catch (error) {
       console.error('Quiz submission error:', error);
-      alert('Error submitting quiz');
+      setSubmitted(true); // Still show completion even if save fails
     } finally {
       setLoading(false);
     }
   };
 
-  if (submitted && score !== null) {
-    return (
-      <div className="quiz-result">
-        <h3>Quiz Complete!</h3>
-        <p>Your Score: {score} / {questions.length}</p>
-        <p>{Math.round((score / questions.length) * 100)}%</p>
-        <button onClick={() => { setSubmitted(false); setScore(null); setAnswers(new Array(questions.length).fill(-1)); }}>
-          Retake Quiz
-        </button>
-      </div>
-    );
-  }
+  const handleReset = () => {
+    setSubmitted(false);
+    setAnswers(new Array(questions.length).fill(-1));
+  };
 
   return (
     <div className="pop-quiz">
       <h3>{title}</h3>
+      {submitted && (
+        <div className="quiz-complete-banner">
+          Quiz Completed! Review your answers below.
+        </div>
+      )}
       <div className="quiz-questions">
         {questions.map((q, qIdx) => (
           <div key={qIdx} className="quiz-question">
-            <p className="question-text">{q.question}</p>
+            <p className="question-text">
+              {qIdx + 1}. {q.question}
+            </p>
             <div className="quiz-options">
-              {q.options.map((option, optIdx) => (
-                <label key={optIdx} className="quiz-option">
-                  <input
-                    type="checkbox"
-                    checked={answers[qIdx] === optIdx}
-                    onChange={() => handleAnswer(qIdx, optIdx)}
-                    disabled={submitted}
-                  />
-                  <span>{option}</span>
-                </label>
-              ))}
+              {q.options.map((option, optIdx) => {
+                const isSelected = answers[qIdx] === optIdx;
+                let optionClassName = 'quiz-option';
+                
+                if (submitted && isSelected) {
+                  optionClassName += ' quiz-option-selected';
+                }
+                
+                return (
+                  <label key={optIdx} className={optionClassName}>
+                    <input
+                      type="radio"
+                      name={`quiz-question-${qIdx}`}
+                      checked={isSelected}
+                      onChange={() => handleAnswer(qIdx, optIdx)}
+                      disabled={submitted}
+                    />
+                    <span>{option}</span>
+                  </label>
+                );
+              })}
             </div>
           </div>
         ))}
       </div>
-      <button
-        onClick={handleSubmit}
-        disabled={loading || answers.includes(-1)}
-        className="quiz-submit"
-      >
-        {loading ? 'Submitting...' : 'Submit Quiz'}
-      </button>
+      <div className="quiz-actions">
+        {!submitted ? (
+          <button
+            onClick={handleSubmit}
+            disabled={loading || answers.includes(-1)}
+            className="quiz-submit"
+          >
+            {loading ? 'Submitting...' : 'Submit Quiz'}
+          </button>
+        ) : (
+          <button onClick={handleReset} className="quiz-retry">
+            Try Again
+          </button>
+        )}
+      </div>
     </div>
   );
 }

@@ -32,17 +32,28 @@ function parsePopQuiz(markdown: string): { title: string; questions: QuizQuestio
 
     // Extract options from table rows: |  | Option text |
     const options: string[] = [];
-    const rowPattern = /^\|[^|]*\|\s*([^|]+?)\s*\|/gm;
-    let rowMatch;
-    while ((rowMatch = rowPattern.exec(section)) !== null) {
-      const text = rowMatch[1].trim();
-      if (text && !/^-+$/.test(text)) {
-        options.push(text);
+    // Match table rows with content in the second column
+    const lines = section.split('\n');
+    for (const line of lines) {
+      // Skip header separator rows like | --- | --- |
+      if (/^\|[\s-]+\|[\s-]+\|/.test(line)) continue;
+      // Skip empty header rows like |  |  |
+      if (/^\|\s*\|\s*\|$/.test(line)) continue;
+      
+      // Match rows with content: |  | Option text |
+      const rowMatch = line.match(/^\|\s*\|\s*([^|]+?)\s*\|$/);
+      if (rowMatch) {
+        const text = rowMatch[1].trim();
+        if (text && text.length > 0) {
+          options.push(text);
+        }
       }
     }
 
     if (options.length > 0) {
-      questions.push({ question, options, correctAnswer: options.length - 1 });
+      // For now, we don't know the correct answer from markdown, so default to 0
+      // The quiz will work as a practice quiz where users can see their selections
+      questions.push({ question, options, correctAnswer: 0 });
     }
   }
 
