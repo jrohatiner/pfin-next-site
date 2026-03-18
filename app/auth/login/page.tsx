@@ -15,7 +15,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-export default function LoginPage() {
+export default function Page() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -29,12 +29,32 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error, data } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
       if (error) throw error
-      router.push('/dashboard')
+
+      // Get user profile to determine role and redirect
+      if (data.user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role, pre_test_completed')
+          .eq('id', data.user.id)
+          .single()
+
+        if (profile?.role === 'teacher') {
+          router.push('/dashboard/teacher')
+        } else if (profile?.role === 'student') {
+          if (profile.pre_test_completed) {
+            router.push('/dashboard/student')
+          } else {
+            router.push('/pre-test')
+          }
+        } else {
+          router.push('/protected')
+        }
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : 'An error occurred')
     } finally {
@@ -50,7 +70,7 @@ export default function LoginPage() {
             <CardHeader>
               <CardTitle className="text-2xl">Login</CardTitle>
               <CardDescription>
-                Enter your email and password to login
+                Enter your email below to login to your account
               </CardDescription>
             </CardHeader>
             <CardContent>

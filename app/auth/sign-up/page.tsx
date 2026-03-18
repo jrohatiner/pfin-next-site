@@ -1,234 +1,238 @@
 'use client'
 
+import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 
-export default function SignUpPage() {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+export default function SignUp() {
+  const router = useRouter()
+  const supabase = createClient()
+  const [userType, setUserType] = useState<'student' | 'teacher' | null>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [repeatPassword, setRepeatPassword] = useState('')
-  const [role, setRole] = useState<'student' | 'teacher'>('student')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [sessionCode, setSessionCode] = useState('')
   const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const supabase = createClient()
-    setIsLoading(true)
     setError(null)
+    setLoading(true)
 
-    if (password !== repeatPassword) {
-      setError('Passwords do not match')
-      setIsLoading(false)
+    // Validation
+    if (!email || !password || !confirmPassword) {
+      setError('Please fill in all fields')
+      setLoading(false)
       return
     }
 
-    if (role === 'student' && !sessionCode.trim()) {
-      setError('Session code is required for students')
-      setIsLoading(false)
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      setLoading(false)
+      return
+    }
+
+    if (userType === 'student' && !sessionCode) {
+      setError('Please enter a classroom session code')
+      setLoading(false)
       return
     }
 
     try {
-      // Sign up with email and password
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      // Sign up with metadata
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
           emailRedirectTo:
             process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ||
-            `${window.location.origin}/auth/callback`,
+            `${window.location.origin}/protected`,
           data: {
-            first_name: firstName,
-            last_name: lastName,
-            role,
+            role: userType,
+            session_code: userType === 'student' ? sessionCode : undefined,
           },
         },
       })
 
-      if (authError) throw authError
+      if (signUpError) {
+        setError(signUpError.message)
+      } else if (data.user) {
+        // If student, enroll in classroom
+        if (userType === 'student' && sessionCode) {
+          try {
+            const response = await fetch('/api/auth/enroll-classroom', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                userId: data.user.id,
+                sessionCode,
+              }),
+            })
 
-      // If student, enroll in classroom
-      if (role === 'student' && authData.user) {
-        try {
-          const { error: enrollError } = await supabase.rpc(
-            'enroll_student_by_code',
-            { p_session_code: sessionCode.toUpperCase() }
-          )
-          if (enrollError) throw enrollError
-        } catch (enrollErr) {
-          console.error('Enrollment error:', enrollErr)
-          setError('Invalid session code. Please check and try again.')
-          // Don't throw - user is still created, just not enrolled
+            if (!response.ok) {
+              const result = await response.json()
+              setError(result.error || 'Failed to join classroom')
+              setLoading(false)
+              return
+            }
+          } catch (err) {
+            setError('Failed to join classroom')
+            setLoading(false)
+            return
+          }
         }
-      }
 
-      router.push('/auth/sign-up-success')
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : 'An error occurred')
+        // Redirect to sign-up success page
+        router.push('/auth/sign-up-success')
+      }
+    } catch (err) {
+      setError('An unexpected error occurred')
     } finally {
-      setIsLoading(false)
+      setLoading(false)
     }
   }
 
-  return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">Create Account</CardTitle>
-              <CardDescription>
-                {role === 'teacher'
-                  ? 'Create a teacher account to manage classrooms'
-                  : 'Join a classroom as a student'}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSignUp}>
-                <div className="flex flex-col gap-6">
-                  {/* Account Type Selection */}
-                  <div className="grid gap-2">
-                    <Label htmlFor="role">Account Type</Label>
-                    <Select
-                      value={role}
-                      onValueChange={(value) => {
-                        setRole(value as 'student' | 'teacher')
-                        setSessionCode('')
-                      }}
-                    >
-                      <SelectTrigger id="role">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="student">Student</SelectItem>
-                        <SelectItem value="teacher">Teacher</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+  if (!userType) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4">
+        <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-lg">
+          <h1 className="mb-2 text-center text-3xl font-bold text-slate-900">
+            Create Account
+          </h1>
+          <p className="mb-8 text-center text-slate-600">
+            Are you a student or teacher?
+          </p>
 
-                  {/* Name Fields */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="grid gap-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input
-                        id="firstName"
-                        placeholder="John"
-                        required
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input
-                        id="lastName"
-                        placeholder="Doe"
-                        required
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                      />
-                    </div>
-                  </div>
+          <div className="space-y-4">
+            <button
+              onClick={() => setUserType('student')}
+              className="w-full rounded-lg border-2 border-blue-200 bg-blue-50 px-6 py-4 font-semibold text-blue-700 transition hover:border-blue-400 hover:bg-blue-100"
+            >
+              Student
+            </button>
+            <button
+              onClick={() => setUserType('teacher')}
+              className="w-full rounded-lg border-2 border-purple-200 bg-purple-50 px-6 py-4 font-semibold text-purple-700 transition hover:border-purple-400 hover:bg-purple-100"
+            >
+              Teacher
+            </button>
+          </div>
 
-                  {/* Email */}
-                  <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Session Code for Students */}
-                  {role === 'student' && (
-                    <div className="grid gap-2">
-                      <Label htmlFor="sessionCode">Session Code</Label>
-                      <Input
-                        id="sessionCode"
-                        placeholder="ABC123"
-                        required
-                        value={sessionCode}
-                        onChange={(e) =>
-                          setSessionCode(e.target.value.toUpperCase())
-                        }
-                      />
-                      <p className="text-xs text-gray-500">
-                        Ask your teacher for the 6-character session code
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Password */}
-                  <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Repeat Password */}
-                  <div className="grid gap-2">
-                    <Label htmlFor="repeatPassword">Confirm Password</Label>
-                    <Input
-                      id="repeatPassword"
-                      type="password"
-                      required
-                      value={repeatPassword}
-                      onChange={(e) => setRepeatPassword(e.target.value)}
-                    />
-                  </div>
-
-                  {error && <p className="text-sm text-red-500">{error}</p>}
-
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? 'Creating account...' : 'Sign up'}
-                  </Button>
-                </div>
-                <div className="mt-4 text-center text-sm">
-                  Already have an account?{' '}
-                  <Link
-                    href="/auth/login"
-                    className="underline underline-offset-4"
-                  >
-                    Login
-                  </Link>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
+          <p className="mt-6 text-center text-sm text-slate-600">
+            Already have an account?{' '}
+            <Link href="/auth/login" className="font-semibold text-blue-600 hover:underline">
+              Sign In
+            </Link>
+          </p>
         </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4">
+      <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-lg">
+        <button
+          onClick={() => setUserType(null)}
+          className="mb-6 text-sm text-blue-600 hover:underline"
+        >
+          ← Change user type
+        </button>
+
+        <h1 className="mb-2 text-2xl font-bold text-slate-900">
+          Sign Up as {userType === 'student' ? 'Student' : 'Teacher'}
+        </h1>
+        <p className="mb-6 text-sm text-slate-600">
+          {userType === 'student'
+            ? 'Join a classroom and start learning'
+            : 'Create your own classroom'}
+        </p>
+
+        <form onSubmit={handleSignUp} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-slate-700">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              placeholder="your@email.com"
+              disabled={loading}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-slate-700">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              placeholder="••••••••"
+              disabled={loading}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700">
+              Confirm Password
+            </label>
+            <input
+              id="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              placeholder="••••••••"
+              disabled={loading}
+            />
+          </div>
+
+          {userType === 'student' && (
+            <div>
+              <label htmlFor="sessionCode" className="block text-sm font-medium text-slate-700">
+                Classroom Session Code
+              </label>
+              <input
+                id="sessionCode"
+                type="text"
+                value={sessionCode}
+                onChange={(e) => setSessionCode(e.target.value.toUpperCase())}
+                className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                placeholder="e.g. ABC123"
+                disabled={loading}
+              />
+              <p className="mt-1 text-xs text-slate-500">
+                Ask your teacher for the classroom session code
+              </p>
+            </div>
+          )}
+
+          {error && <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">{error}</div>}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
+          >
+            {loading ? 'Creating account...' : 'Sign Up'}
+          </button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-slate-600">
+          Already have an account?{' '}
+          <Link href="/auth/login" className="font-semibold text-blue-600 hover:underline">
+            Sign In
+          </Link>
+        </p>
       </div>
     </div>
   )
