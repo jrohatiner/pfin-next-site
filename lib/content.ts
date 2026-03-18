@@ -180,3 +180,4 @@ export function getVideoNavigation(slug: string): ContentNavInfo {
     next: index < videos.length - 1 ? { slug: videos[index + 1].slug, title: videos[index + 1].title } : null,
   };
 }
+
