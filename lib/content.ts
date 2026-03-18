@@ -25,11 +25,23 @@ export const tsxComponentRegistry: Record<"lessons" | "videos", Record<string, {
       title: "Credit Cards: Terms and Fees",
       getComponent: () => import("@/components/lessons/credit-cards-terms-fees"),
     },
+    "build-wealth-not-debt": {
+      title: "A Strategy to Build Wealth, Not Debt",
+      getComponent: () => import("@/components/lessons/build-wealth-not-debt"),
+    },
   },
   videos: {
     "magic-of-compound-interest": {
       title: "The Magic of Compound Interest",
       getComponent: () => import("@/components/videos/magic-of-compound-interest"),
+    },
+    "what-is-money": {
+      title: "What is Money?",
+      getComponent: () => import("@/components/videos/what-is-money"),
+    },
+    "can-you-afford-buy-house": {
+      title: "Can You Afford To Buy That House?",
+      getComponent: () => import("@/components/videos/can-you-afford-buy-house"),
     },
   },
 };
