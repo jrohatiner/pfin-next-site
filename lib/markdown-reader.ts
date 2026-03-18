@@ -4,15 +4,35 @@ import path from "path";
 /**
  * Reads markdown file from the content directory
  * Returns the raw content without parsing
+ * Supports both formats: "0001-Title.md" and "Title.md"
  */
 export async function readContentFile(type: "lessons" | "videos", id: string): Promise<string | null> {
   try {
     const contentDir = path.join(process.cwd(), "content", type);
-    
-    // Find the file that matches this ID
-    // Files are named like: 0001-Title-Here.md
     const files = await fs.readdir(contentDir);
-    const file = files.find((f) => f.startsWith(id.padStart(4, "0")));
+    
+    // First try: find by numeric ID prefix (0001, 0002, etc)
+    const paddedId = id.padStart(4, "0");
+    let file = files.find((f) => f.startsWith(paddedId));
+    
+    // Second try: if not found by ID, find by slug (filename without prefix)
+    if (!file) {
+      // Convert slug to potential filename patterns
+      // e.g., "investing-101-chapter-9-vocabulary-quiz" -> "Investing 101 Chapter 9 Vocabulary Quiz"
+      const titlePatterns = [
+        id.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" "),
+        id.toUpperCase(),
+        id
+      ];
+      
+      file = files.find((f) => {
+        const nameWithoutPrefix = f.replace(/^\d+-/, "").replace(/\.md$/, "");
+        return titlePatterns.some(pattern => 
+          nameWithoutPrefix.toLowerCase().includes(pattern.toLowerCase()) ||
+          nameWithoutPrefix.toLowerCase() === pattern.toLowerCase()
+        );
+      });
+    }
     
     if (!file) return null;
     
