@@ -1,161 +1,127 @@
 'use client'
 
+import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
 
-interface Question {
-  id: number
-  question: string
-  options: string[]
-  correctAnswer: number
-}
-
-const PRE_TEST_QUESTIONS: Question[] = [
+const PRE_TEST_QUESTIONS = [
   {
     id: 1,
-    question: 'What is the primary purpose of creating a budget?',
+    question: 'What is a budget?',
     options: [
-      'To track and control your spending',
-      'To become wealthy quickly',
-      'To avoid paying taxes',
-      'To impress your friends',
+      'A plan for how you will spend money',
+      'A type of bank account',
+      'A credit card',
+      'A loan from a bank',
     ],
     correctAnswer: 0,
   },
   {
     id: 2,
-    question: 'Which of the following is NOT a form of emergency fund?',
-    options: [
-      'High-yield savings account',
-      'Money market account',
-      'Stock investments',
-      'Checking account',
-    ],
-    correctAnswer: 2,
+    question: 'Which of the following is a fixed expense?',
+    options: ['Dining out', 'Rent', 'Entertainment', 'Shopping'],
+    correctAnswer: 1,
   },
   {
     id: 3,
-    question: 'What does APR stand for?',
+    question: 'What is compound interest?',
     options: [
-      'Annual Payment Rate',
-      'Annual Percentage Rate',
-      'Annual Principal Rate',
-      'Adjusted Payment Rate',
+      'Interest charged on your debt',
+      'Interest earned on interest',
+      'A type of savings account',
+      'A fee charged by banks',
     ],
     correctAnswer: 1,
   },
   {
     id: 4,
-    question: 'Which credit score range is typically considered "good"?',
-    options: ['300-400', '400-600', '600-750', '750-850'],
-    correctAnswer: 2,
+    question: 'A credit score is used to determine:',
+    options: [
+      'Your income level',
+      'Your creditworthiness and interest rates',
+      'How much you spend annually',
+      'Your employment history',
+    ],
+    correctAnswer: 1,
   },
   {
     id: 5,
     question: 'What is diversification in investing?',
     options: [
-      'Investing all your money in one stock',
+      'Putting all money in one stock',
       'Spreading investments across different assets',
-      'Buying and selling stocks frequently',
-      'Investing only in bonds',
+      'Buying bonds only',
+      'Saving money in a bank',
     ],
     correctAnswer: 1,
   },
   {
     id: 6,
-    question: 'What is compound interest?',
+    question: 'Which is an asset?',
     options: [
-      'Interest paid on the principal only',
-      'Interest paid on principal plus accumulated interest',
-      'Interest that never changes',
-      'Interest paid monthly instead of yearly',
-    ],
-    correctAnswer: 1,
-  },
-  {
-    id: 7,
-    question: 'Which of these is a tax-advantaged retirement account?',
-    options: [
-      'Checking account',
-      '401(k) or IRA',
-      'Savings account',
-      'Credit card',
-    ],
-    correctAnswer: 1,
-  },
-  {
-    id: 8,
-    question: 'What does insurance primarily protect against?',
-    options: [
-      'Stock market losses',
-      'Inflation',
-      'Financial loss from unexpected events',
-      'Paying taxes',
+      'A car loan',
+      'Credit card debt',
+      'A house you own',
+      'A utility bill',
     ],
     correctAnswer: 2,
   },
   {
-    id: 9,
-    question: 'What is the 50/30/20 budgeting rule?',
+    id: 7,
+    question: 'What does APR stand for?',
     options: [
-      '50% savings, 30% investments, 20% spending',
-      '50% needs, 30% wants, 20% savings',
-      '50% bills, 30% credit, 20% debt',
-      'A rule that never changes',
+      'Annual Percentage Rate',
+      'Annual Payment Rate',
+      'Average Percentage Rate',
+      'Annual Principal Rate',
+    ],
+    correctAnswer: 0,
+  },
+  {
+    id: 8,
+    question: 'Emergency funds should ideally cover:',
+    options: [
+      '1 month of expenses',
+      '3-6 months of expenses',
+      '1 year of expenses',
+      '2 weeks of expenses',
     ],
     correctAnswer: 1,
   },
   {
-    id: 10,
-    question: 'Which factor has the MOST impact on your credit score?',
+    id: 9,
+    question: 'What is inflation?',
     options: [
-      'Payment history',
-      'Credit card brand',
-      'Your income',
-      'Your age',
+      'A decrease in prices',
+      'An increase in the money supply',
+      'An increase in the general price level of goods',
+      'A type of investment',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
+  },
+  {
+    id: 10,
+    question: 'A 401(k) is primarily used for:',
+    options: [
+      'Emergency savings',
+      'College education',
+      'Retirement savings',
+      'Short-term investments',
+    ],
+    correctAnswer: 2,
   },
 ]
 
 export default function PreTestPage() {
+  const router = useRouter()
+  const supabase = createClient()
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<number[]>([])
   const [showResults, setShowResults] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [score, setScore] = useState(0)
-  const [loading, setLoading] = useState(true)
-  const router = useRouter()
-  const supabase = createClient()
 
-  useEffect(() => {
-    checkIfAlreadyCompleted()
-  }, [supabase])
-
-  const checkIfAlreadyCompleted = async () => {
-    const { data: sessionData } = await supabase.auth.getSession()
-    if (!sessionData.session) {
-      router.push('/auth/login')
-      return
-    }
-
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('pre_test_completed')
-      .eq('id', sessionData.session.user.id)
-      .single()
-
-    if (profile?.pre_test_completed) {
-      router.push('/dashboard')
-      return
-    }
-
-    setLoading(false)
-  }
-
-  const handleSelectAnswer = (optionIndex: number) => {
+  const handleAnswerSelect = (optionIndex: number) => {
     const newAnswers = [...answers]
     newAnswers[currentQuestion] = optionIndex
     setAnswers(newAnswers)
@@ -176,157 +142,166 @@ export default function PreTestPage() {
   const handleSubmit = async () => {
     // Calculate score
     let correctCount = 0
-    PRE_TEST_QUESTIONS.forEach((question, index) => {
-      if (answers[index] === question.correctAnswer) {
+    PRE_TEST_QUESTIONS.forEach((q, idx) => {
+      if (answers[idx] === q.correctAnswer) {
         correctCount++
       }
     })
-
-    const finalScore = Math.round((correctCount / PRE_TEST_QUESTIONS.length) * 100)
-    setScore(finalScore)
+    const percentage = Math.round((correctCount / PRE_TEST_QUESTIONS.length) * 100)
+    setScore(percentage)
     setShowResults(true)
 
-    // Save score to database
-    const { data: sessionData } = await supabase.auth.getSession()
-    if (sessionData.session) {
-      await supabase
+    // Save result to database
+    setLoading(true)
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (user) {
+      // Update profile with pre-test completion
+      const { error } = await supabase
         .from('profiles')
         .update({
           pre_test_completed: true,
-          pre_test_score: finalScore,
+          pre_test_score: percentage,
         })
-        .eq('id', sessionData.session.user.id)
+        .eq('id', user.id)
+
+      if (error) {
+        console.error('Error saving pre-test result:', error)
+      }
     }
+    setLoading(false)
   }
 
-  const handleComplete = () => {
-    router.push('/dashboard')
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
-      </div>
-    )
+  const handleContinue = () => {
+    router.push('/dashboard/student')
   }
 
   if (showResults) {
     return (
-      <div className="max-w-2xl mx-auto">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-center text-3xl">Test Results</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6 text-center">
-            <div className="text-6xl font-bold text-blue-600">{score}%</div>
-            <div>
-              <p className="text-lg text-gray-700 mb-2">
-                You answered {Math.round((score / 100) * PRE_TEST_QUESTIONS.length)} out of {PRE_TEST_QUESTIONS.length} questions correctly.
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4">
+        <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-lg">
+          <div className="text-center">
+            <div className="mb-4 text-5xl font-bold text-slate-900">{score}%</div>
+            <h2 className="mb-2 text-2xl font-bold text-slate-900">
+              Pre-Test Complete!
+            </h2>
+            <p className="mb-6 text-slate-600">
+              {score >= 70
+                ? 'Great job! You have solid financial knowledge.'
+                : 'Good start! Keep learning to improve your financial literacy.'}
+            </p>
+
+            <div className="mb-6 rounded-lg bg-slate-50 p-4 text-left">
+              <p className="text-sm font-medium text-slate-700">Results Breakdown:</p>
+              <p className="mt-2 text-sm text-slate-600">
+                Correct Answers: {answers.filter((a, idx) => a === PRE_TEST_QUESTIONS[idx]?.correctAnswer).length} / {PRE_TEST_QUESTIONS.length}
               </p>
-              {score >= 70 ? (
-                <p className="text-green-600 font-medium">
-                  Great job! You're ready to start learning.
-                </p>
-              ) : (
-                <p className="text-yellow-600 font-medium">
-                  Don't worry! This helps us understand your starting point. Let's learn together!
-                </p>
-              )}
             </div>
-            <Button onClick={handleComplete} className="w-full">
-              Continue to Dashboard
-            </Button>
-          </CardContent>
-        </Card>
+
+            <button
+              onClick={handleContinue}
+              disabled={loading}
+              className="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
+            >
+              {loading ? 'Saving...' : 'Continue to Dashboard'}
+            </button>
+          </div>
+        </div>
       </div>
     )
   }
 
   const question = PRE_TEST_QUESTIONS[currentQuestion]
-  const isAnswered = answers[currentQuestion] !== undefined
+  const selectedAnswer = answers[currentQuestion]
+  const progress = ((currentQuestion + 1) / PRE_TEST_QUESTIONS.length) * 100
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <Card>
-        <CardHeader>
-          <div className="flex justify-between items-center">
-            <CardTitle>Financial Literacy Pre-Test</CardTitle>
-            <span className="text-sm text-gray-600">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4 py-8">
+      <div className="w-full max-w-2xl rounded-lg border border-slate-200 bg-white p-8 shadow-lg">
+        {/* Header */}
+        <div className="mb-6">
+          <div className="mb-4 flex items-center justify-between">
+            <h1 className="text-2xl font-bold text-slate-900">Financial Literacy Pre-Test</h1>
+            <span className="text-sm font-medium text-slate-600">
               Question {currentQuestion + 1} of {PRE_TEST_QUESTIONS.length}
             </span>
           </div>
-          <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
+          <div className="h-2 w-full rounded-full bg-slate-200">
             <div
-              className="bg-blue-600 h-2 rounded-full transition-all"
-              style={{
-                width: `${((currentQuestion + 1) / PRE_TEST_QUESTIONS.length) * 100}%`,
-              }}
+              className="h-full rounded-full bg-blue-600 transition-all duration-300"
+              style={{ width: `${progress}%` }}
             />
           </div>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Question */}
-          <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              {question.question}
-            </h2>
-          </div>
+        </div>
 
-          {/* Answer Options */}
+        {/* Question */}
+        <div className="mb-8">
+          <h2 className="mb-6 text-lg font-semibold text-slate-900">
+            {question.question}
+          </h2>
+
+          {/* Options */}
           <div className="space-y-3">
-            {question.options.map((option, index) => (
+            {question.options.map((option, idx) => (
               <button
-                key={index}
-                onClick={() => handleSelectAnswer(index)}
-                className={`w-full p-4 text-left border-2 rounded-lg transition ${
-                  answers[currentQuestion] === index
-                    ? 'bg-blue-50 border-blue-500'
-                    : 'border-gray-200 hover:border-gray-300'
+                key={idx}
+                onClick={() => handleAnswerSelect(idx)}
+                className={`w-full rounded-lg border-2 p-4 text-left font-medium transition ${
+                  selectedAnswer === idx
+                    ? 'border-blue-500 bg-blue-50 text-blue-900'
+                    : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`w-5 h-5 rounded-full border-2 ${
-                      answers[currentQuestion] === index
-                        ? 'bg-blue-500 border-blue-500'
-                        : 'border-gray-300'
+                    className={`flex h-5 w-5 items-center justify-center rounded-full border-2 ${
+                      selectedAnswer === idx
+                        ? 'border-blue-500 bg-blue-500'
+                        : 'border-slate-300'
                     }`}
-                  />
-                  <span className="text-gray-700">{option}</span>
+                  >
+                    {selectedAnswer === idx && (
+                      <div className="h-2 w-2 rounded-full bg-white" />
+                    )}
+                  </div>
+                  {option}
                 </div>
               </button>
             ))}
           </div>
+        </div>
 
-          {/* Navigation Buttons */}
-          <div className="flex gap-3 justify-between pt-4">
-            <Button
-              onClick={handlePrevious}
-              variant="outline"
-              disabled={currentQuestion === 0}
+        {/* Navigation */}
+        <div className="flex gap-4">
+          <button
+            onClick={handlePrevious}
+            disabled={currentQuestion === 0}
+            className="flex-1 rounded-lg border border-slate-300 px-4 py-2 font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
+          >
+            Previous
+          </button>
+
+          {currentQuestion === PRE_TEST_QUESTIONS.length - 1 ? (
+            <button
+              onClick={handleSubmit}
+              disabled={selectedAnswer === undefined || loading}
+              className="flex-1 rounded-lg bg-green-600 px-4 py-2 font-semibold text-white transition hover:bg-green-700 disabled:opacity-50"
             >
-              Previous
-            </Button>
-
-            {currentQuestion < PRE_TEST_QUESTIONS.length - 1 ? (
-              <Button
-                onClick={handleNext}
-                disabled={!isAnswered}
-              >
-                Next
-              </Button>
-            ) : (
-              <Button
-                onClick={handleSubmit}
-                disabled={!isAnswered}
-              >
-                Submit Test
-              </Button>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+              {loading ? 'Submitting...' : 'Submit Test'}
+            </button>
+          ) : (
+            <button
+              onClick={handleNext}
+              disabled={selectedAnswer === undefined}
+              className="flex-1 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
+            >
+              Next
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,67 +1,30 @@
 'use client'
 
+import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 
 interface QuizQuestion {
-  id: string
+  id: string | number
   question: string
   options: string[]
   correctAnswer: number
 }
 
 interface QuizBlockProps {
-  lessonSlug: string
+  lessonId: string
   questions: QuizQuestion[]
   title?: string
 }
 
-export default function QuizBlock({
-  lessonSlug,
-  questions,
-  title = 'Lesson Quiz',
-}: QuizBlockProps) {
+export default function QuizBlock({ lessonId, questions, title = 'Lesson Quiz' }: QuizBlockProps) {
+  const supabase = createClient()
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<number[]>([])
   const [showResults, setShowResults] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [score, setScore] = useState(0)
-  const [saved, setSaved] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const supabase = createClient()
 
-  useEffect(() => {
-    loadExistingScore()
-  }, [lessonSlug, supabase])
-
-  const loadExistingScore = async () => {
-    const { data: sessionData } = await supabase.auth.getSession()
-    if (!sessionData.session) {
-      setLoading(false)
-      return
-    }
-
-    const { data } = await supabase
-      .from('quiz_results')
-      .select('score, answers')
-      .eq('student_id', sessionData.session.user.id)
-      .eq('lesson_slug', lessonSlug)
-      .single()
-
-    if (data) {
-      setScore(data.score)
-      setAnswers(data.answers || [])
-      setShowResults(true)
-      setSaved(true)
-    }
-
-    setLoading(false)
-  }
-
-  const handleSelectAnswer = (optionIndex: number) => {
-    if (showResults) return // Prevent changes after submission
-
+  const handleAnswerSelect = (optionIndex: number) => {
     const newAnswers = [...answers]
     newAnswers[currentQuestion] = optionIndex
     setAnswers(newAnswers)
@@ -82,185 +45,164 @@ export default function QuizBlock({
   const handleSubmit = async () => {
     // Calculate score
     let correctCount = 0
-    questions.forEach((question, index) => {
-      if (answers[index] === question.correctAnswer) {
+    questions.forEach((q, idx) => {
+      if (answers[idx] === q.correctAnswer) {
         correctCount++
       }
     })
-
-    const finalScore = Math.round((correctCount / questions.length) * 100)
-    setScore(finalScore)
+    const percentage = Math.round((correctCount / questions.length) * 100)
+    setScore(percentage)
     setShowResults(true)
 
-    // Save to database
-    const { data: sessionData } = await supabase.auth.getSession()
-    if (sessionData.session) {
-      const { error } = await supabase.from('quiz_results').upsert({
-        student_id: sessionData.session.user.id,
-        lesson_slug: lessonSlug,
-        score: finalScore,
-        answers,
+    // Save result to database
+    setLoading(true)
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (user) {
+      const { error } = await supabase.from('quiz_results').insert({
+        student_id: user.id,
+        lesson_id: lessonId,
+        score: correctCount,
+        total_questions: questions.length,
       })
 
-      if (!error) {
-        setSaved(true)
+      if (error) {
+        console.error('Error saving quiz result:', error)
       }
     }
+    setLoading(false)
   }
 
-  if (loading) {
-    return (
-      <Card>
-        <CardContent className="pt-6">
-          <p>Loading quiz...</p>
-        </CardContent>
-      </Card>
-    )
+  const handleRetry = () => {
+    setCurrentQuestion(0)
+    setAnswers([])
+    setShowResults(false)
+    setScore(0)
   }
 
   if (showResults) {
-    const correctCount = answers.filter(
-      (answer, index) => answer === questions[index]?.correctAnswer
-    ).length
+    const correctCount = answers.filter((a, idx) => a === questions[idx]?.correctAnswer).length
 
     return (
-      <Card className={saved ? 'border-green-200 bg-green-50' : ''}>
-        <CardHeader>
-          <CardTitle>{title} - Results</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="text-center">
-            <div className="text-5xl font-bold text-blue-600 mb-2">{score}%</div>
-            <p className="text-gray-700">
-              You answered {correctCount} out of {questions.length} questions correctly.
+      <div className="rounded-lg border border-slate-200 bg-gradient-to-br from-blue-50 to-slate-50 p-8 shadow-sm">
+        <div className="text-center">
+          <div className="mb-4 text-5xl font-bold text-blue-600">{score}%</div>
+          <h3 className="mb-2 text-2xl font-bold text-slate-900">Quiz Complete!</h3>
+          <p className="mb-6 text-slate-600">
+            {score >= 80
+              ? 'Excellent work! You have a strong understanding of this material.'
+              : score >= 60
+                ? 'Good effort! Review the material and try again if you like.'
+                : 'Keep learning! Try reviewing the lesson before taking the quiz again.'}
+          </p>
+
+          <div className="mb-6 rounded-lg bg-white p-4 text-left">
+            <p className="text-sm font-medium text-slate-700">Results:</p>
+            <p className="mt-2 text-sm text-slate-600">
+              Correct Answers: {correctCount} / {questions.length}
             </p>
           </div>
 
-          {saved && (
-            <div className="p-4 bg-green-100 border border-green-300 rounded-lg">
-              <p className="text-green-800">
-                Your score has been saved and will appear on your teacher's dashboard.
-              </p>
-            </div>
-          )}
-
-          {/* Show review of answers */}
-          <div className="space-y-4 mt-6">
-            <h3 className="font-semibold text-gray-900">Review Your Answers</h3>
-            {questions.map((question, index) => {
-              const isCorrect = answers[index] === question.correctAnswer
-              return (
-                <div
-                  key={question.id}
-                  className={`p-4 border rounded-lg ${
-                    isCorrect
-                      ? 'bg-green-50 border-green-200'
-                      : 'bg-red-50 border-red-200'
-                  }`}
-                >
-                  <p className="font-medium text-gray-900 mb-2">
-                    {index + 1}. {question.question}
-                  </p>
-                  <p
-                    className={`text-sm ${
-                      isCorrect ? 'text-green-700' : 'text-red-700'
-                    }`}
-                  >
-                    {isCorrect ? '✓ Correct' : '✗ Incorrect'}
-                  </p>
-                  <p className="text-sm text-gray-600 mt-2">
-                    Your answer: {question.options[answers[index]]}
-                  </p>
-                  {!isCorrect && (
-                    <p className="text-sm text-gray-600">
-                      Correct answer: {question.options[question.correctAnswer]}
-                    </p>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </CardContent>
-      </Card>
+          <button
+            onClick={handleRetry}
+            className="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white transition hover:bg-blue-700"
+          >
+            Retake Quiz
+          </button>
+        </div>
+      </div>
     )
   }
 
   const question = questions[currentQuestion]
-  const isAnswered = answers[currentQuestion] !== undefined
+  const selectedAnswer = answers[currentQuestion]
+  const progress = ((currentQuestion + 1) / questions.length) * 100
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <CardTitle>{title}</CardTitle>
-          <span className="text-sm text-gray-600">
+    <div className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
+      {/* Header */}
+      <div className="mb-6">
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-xl font-bold text-slate-900">{title}</h3>
+          <span className="text-sm font-medium text-slate-600">
             Question {currentQuestion + 1} of {questions.length}
           </span>
         </div>
-        <div className="mt-4 w-full bg-gray-200 rounded-full h-2">
+        <div className="h-2 w-full rounded-full bg-slate-200">
           <div
-            className="bg-blue-600 h-2 rounded-full transition-all"
-            style={{
-              width: `${((currentQuestion + 1) / questions.length) * 100}%`,
-            }}
+            className="h-full rounded-full bg-blue-600 transition-all duration-300"
+            style={{ width: `${progress}%` }}
           />
         </div>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Question */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            {question.question}
-          </h3>
-        </div>
+      </div>
 
-        {/* Answer Options */}
+      {/* Question */}
+      <div className="mb-8">
+        <h4 className="mb-6 text-lg font-semibold text-slate-900">
+          {question.question}
+        </h4>
+
+        {/* Options */}
         <div className="space-y-3">
-          {question.options.map((option, index) => (
+          {question.options.map((option, idx) => (
             <button
-              key={index}
-              onClick={() => handleSelectAnswer(index)}
-              className={`w-full p-4 text-left border-2 rounded-lg transition ${
-                answers[currentQuestion] === index
-                  ? 'bg-blue-50 border-blue-500'
-                  : 'border-gray-200 hover:border-gray-300'
+              key={idx}
+              onClick={() => handleAnswerSelect(idx)}
+              className={`w-full rounded-lg border-2 p-4 text-left font-medium transition ${
+                selectedAnswer === idx
+                  ? 'border-blue-500 bg-blue-50 text-blue-900'
+                  : 'border-slate-300 bg-white text-slate-900 hover:border-slate-400'
               }`}
             >
               <div className="flex items-center gap-3">
                 <div
-                  className={`w-5 h-5 rounded-full border-2 ${
-                    answers[currentQuestion] === index
-                      ? 'bg-blue-500 border-blue-500'
-                      : 'border-gray-300'
+                  className={`flex h-5 w-5 items-center justify-center rounded-full border-2 ${
+                    selectedAnswer === idx
+                      ? 'border-blue-500 bg-blue-500'
+                      : 'border-slate-300'
                   }`}
-                />
-                <span className="text-gray-700">{option}</span>
+                >
+                  {selectedAnswer === idx && (
+                    <div className="h-2 w-2 rounded-full bg-white" />
+                  )}
+                </div>
+                {option}
               </div>
             </button>
           ))}
         </div>
+      </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex gap-3 justify-between pt-4">
-          <Button
-            onClick={handlePrevious}
-            variant="outline"
-            disabled={currentQuestion === 0}
+      {/* Navigation */}
+      <div className="flex gap-4">
+        <button
+          onClick={handlePrevious}
+          disabled={currentQuestion === 0}
+          className="flex-1 rounded-lg border border-slate-300 px-4 py-2 font-semibold text-slate-900 transition hover:bg-slate-50 disabled:opacity-50"
+        >
+          Previous
+        </button>
+
+        {currentQuestion === questions.length - 1 ? (
+          <button
+            onClick={handleSubmit}
+            disabled={selectedAnswer === undefined || loading}
+            className="flex-1 rounded-lg bg-green-600 px-4 py-2 font-semibold text-white transition hover:bg-green-700 disabled:opacity-50"
           >
-            Previous
-          </Button>
-
-          {currentQuestion < questions.length - 1 ? (
-            <Button onClick={handleNext} disabled={!isAnswered}>
-              Next
-            </Button>
-          ) : (
-            <Button onClick={handleSubmit} disabled={!isAnswered}>
-              Submit Quiz
-            </Button>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+            {loading ? 'Submitting...' : 'Submit Quiz'}
+          </button>
+        ) : (
+          <button
+            onClick={handleNext}
+            disabled={selectedAnswer === undefined}
+            className="flex-1 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
+          >
+            Next
+          </button>
+        )}
+      </div>
+    </div>
   )
 }
