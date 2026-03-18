@@ -1,275 +1,214 @@
-'use client'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import Link from 'next/link'
 
-import { createClient } from '@/lib/supabase/client'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { useState, useEffect } from 'react'
+async function getTeacherData(userId: string) {
+  const supabase = await createClient()
 
-interface Classroom {
-  id: string
-  name: string
-  session_code: string
-  description: string
-  is_active: boolean
-  created_at: string
+  // Get teacher's classrooms
+  const { data: classrooms } = await supabase
+    .from('classrooms')
+    .select('*')
+    .eq('teacher_id', userId)
+
+  if (!classrooms || classrooms.length === 0) {
+    return {
+      profile: null,
+      classrooms: [],
+      enrollments: [],
+      totalStudents: 0,
+    }
+  }
+
+  // Get all enrollments for teacher's classrooms
+  const classroomIds = classrooms.map((c) => c.id)
+  const { data: enrollments } = await supabase
+    .from('enrollments')
+    .select('student_id, classroom_id, profiles(id, email)')
+    .in('classroom_id', classroomIds)
+
+  return {
+    classrooms,
+    enrollments: enrollments || [],
+    totalStudents: enrollments?.length || 0,
+  }
 }
 
-interface StudentWithProgress {
-  id: string
-  email: string
-  first_name: string
-  last_name: string
-  pre_test_completed: boolean
-  pre_test_score?: number
-}
+export default async function TeacherDashboard() {
+  const supabase = await createClient()
 
-export default function TeacherDashboard() {
-  const [classrooms, setClassrooms] = useState<Classroom[]>([])
-  const [selectedClassroom, setSelectedClassroom] = useState<string | null>(null)
-  const [students, setStudents] = useState<StudentWithProgress[]>([])
-  const [newClassName, setNewClassName] = useState('')
-  const [showNewClassForm, setShowNewClassForm] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const supabase = createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  useEffect(() => {
-    loadClassrooms()
-  }, [supabase])
+  if (!user) {
+    redirect('/auth/login')
+  }
 
-  const loadClassrooms = async () => {
-    const { data: sessionData } = await supabase.auth.getSession()
-    if (!sessionData.session) return
+  // Verify teacher role
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single()
 
-    const { data } = await supabase
-      .from('classrooms')
-      .select('*')
-      .eq('teacher_id', sessionData.session.user.id)
-      .order('created_at', { ascending: false })
+  if (profile?.role !== 'teacher') {
+    redirect('/auth/login')
+  }
 
-    setClassrooms(data || [])
-    setLoading(false)
+  const { classrooms, enrollments, totalStudents } = await getTeacherData(user.id)
 
-    // Load students for first classroom
-    if (data && data.length > 0) {
-      loadStudents(data[0].id)
-      setSelectedClassroom(data[0].id)
+  const handleCreateClassroom = async (formData: FormData) => {
+    'use server'
+    const supabase = await createClient()
+    const className = formData.get('className') as string
+
+    if (!className) return
+
+    const { error } = await supabase.from('classrooms').insert({
+      teacher_id: user.id,
+      name: className,
+    })
+
+    if (error) {
+      console.error('Failed to create classroom:', error)
     }
-  }
-
-  const loadStudents = async (classroomId: string) => {
-    const { data: enrollments } = await supabase
-      .from('enrollments')
-      .select('student_id, profiles(id, email, first_name, last_name, pre_test_completed, pre_test_score)')
-      .eq('classroom_id', classroomId)
-
-    if (enrollments) {
-      const studentList = enrollments
-        .map((e: any) => e.profiles)
-        .filter(Boolean)
-
-      setStudents(studentList)
-    }
-  }
-
-  const createClassroom = async () => {
-    if (!newClassName.trim()) return
-
-    const { data: sessionData } = await supabase.auth.getSession()
-    if (!sessionData.session) return
-
-    // Generate session code
-    const sessionCode = Math.random().toString(36).substring(2, 8).toUpperCase()
-
-    const { data, error } = await supabase
-      .from('classrooms')
-      .insert({
-        teacher_id: sessionData.session.user.id,
-        name: newClassName,
-        session_code: sessionCode,
-        is_active: true,
-      })
-      .select()
-
-    if (!error && data) {
-      setClassrooms([data[0], ...classrooms])
-      setNewClassName('')
-      setShowNewClassForm(false)
-    }
-  }
-
-  const copySessionCode = (code: string) => {
-    navigator.clipboard.writeText(code)
-    alert(`Session code ${code} copied to clipboard!`)
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-64">
-        <p>Loading...</p>
-      </div>
-    )
   }
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Classroom Management
-        </h1>
-        <p className="text-gray-600">
-          Create and manage your classrooms, and monitor student progress.
-        </p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900">Teacher Dashboard</h1>
+            <p className="text-slate-600">{user.email}</p>
+          </div>
+          <form
+            action={async () => {
+              'use server'
+              const supabase = await createClient()
+              await supabase.auth.signOut()
+              redirect('/auth/login')
+            }}
+          >
+            <button
+              type="submit"
+              className="rounded-lg bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700"
+            >
+              Sign Out
+            </button>
+          </form>
+        </div>
 
-      {/* Create New Classroom */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Create New Classroom</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {!showNewClassForm ? (
-            <Button onClick={() => setShowNewClassForm(true)}>
-              + New Classroom
-            </Button>
-          ) : (
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Classroom Name
-                </label>
-                <input
-                  type="text"
-                  value={newClassName}
-                  onChange={(e) => setNewClassName(e.target.value)}
-                  placeholder="e.g., Finance 101 - Period 2"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                />
-              </div>
-              <div className="flex gap-2">
-                <Button onClick={createClassroom}>Create</Button>
-                <Button
-                  onClick={() => setShowNewClassForm(false)}
-                  variant="outline"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Classrooms List */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left: Classrooms */}
-        <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Your Classrooms ({classrooms.length})
-          </h2>
-          <div className="space-y-2">
-            {classrooms.map((classroom) => (
-              <button
-                key={classroom.id}
-                onClick={() => {
-                  setSelectedClassroom(classroom.id)
-                  loadStudents(classroom.id)
-                }}
-                className={`w-full text-left p-3 rounded-lg border transition ${
-                  selectedClassroom === classroom.id
-                    ? 'bg-blue-50 border-blue-300'
-                    : 'border-gray-200 hover:bg-gray-50'
-                }`}
-              >
-                <div className="font-medium text-gray-900">{classroom.name}</div>
-                <div className="text-xs text-gray-500">
-                  Code: {classroom.session_code}
-                </div>
-              </button>
-            ))}
+        {/* Stats */}
+        <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-slate-600">Total Classrooms</p>
+            <p className="mt-2 text-3xl font-bold text-slate-900">
+              {classrooms.length}
+            </p>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-slate-600">Total Students</p>
+            <p className="mt-2 text-3xl font-bold text-slate-900">
+              {totalStudents}
+            </p>
           </div>
         </div>
 
-        {/* Right: Selected Classroom Details */}
-        {selectedClassroom && classrooms.length > 0 && (
-          <div className="md:col-span-2 space-y-6">
-            {(() => {
-              const classroom = classrooms.find((c) => c.id === selectedClassroom)
-              return classroom ? (
-                <>
-                  {/* Session Code Card */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Session Code</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div>
-                          <p className="text-sm text-gray-600 mb-2">
-                            Share this code with students to let them join this classroom:
-                          </p>
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="text"
-                              value={classroom.session_code}
-                              readOnly
-                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50"
-                            />
-                            <Button
-                              onClick={() => copySessionCode(classroom.session_code)}
+        {/* Create Classroom Form */}
+        <div className="mb-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-2xl font-bold text-slate-900">Create New Classroom</h2>
+          <form action={handleCreateClassroom} className="flex gap-4">
+            <input
+              type="text"
+              name="className"
+              placeholder="Classroom name (e.g., Finance 101)"
+              required
+              className="flex-1 rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            />
+            <button
+              type="submit"
+              className="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white hover:bg-blue-700"
+            >
+              Create
+            </button>
+          </form>
+        </div>
+
+        {/* Classrooms Section */}
+        <div>
+          <h2 className="mb-4 text-2xl font-bold text-slate-900">Your Classrooms</h2>
+          {classrooms.length === 0 ? (
+            <div className="rounded-lg border-2 border-dashed border-slate-300 bg-white p-8 text-center">
+              <p className="text-slate-600">
+                You haven't created any classrooms yet.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {classrooms.map((classroom) => {
+                const classroomEnrollments = enrollments.filter(
+                  (e) => e.classroom_id === classroom.id
+                )
+
+                return (
+                  <div
+                    key={classroom.id}
+                    className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-xl font-semibold text-slate-900">
+                          {classroom.name}
+                        </h3>
+                        <p className="mt-1 text-sm text-slate-600">
+                          Session Code:{' '}
+                          <span className="font-mono font-bold text-slate-900">
+                            {classroom.session_code}
+                          </span>
+                        </p>
+                        <p className="mt-2 text-sm text-slate-600">
+                          {classroomEnrollments.length} student
+                          {classroomEnrollments.length !== 1 ? 's' : ''} enrolled
+                        </p>
+                      </div>
+                      <Link
+                        href={`/dashboard/teacher/classroom/${classroom.id}`}
+                        className="rounded-lg bg-blue-100 px-4 py-2 font-semibold text-blue-600 hover:bg-blue-200"
+                      >
+                        View Details
+                      </Link>
+                    </div>
+
+                    {/* Students List */}
+                    {classroomEnrollments.length > 0 && (
+                      <div className="mt-4 border-t border-slate-200 pt-4">
+                        <p className="mb-2 text-sm font-medium text-slate-600">Students:</p>
+                        <div className="space-y-1">
+                          {classroomEnrollments.slice(0, 3).map((enrollment) => (
+                            <p
+                              key={enrollment.student_id}
+                              className="text-sm text-slate-600"
                             >
-                              Copy
-                            </Button>
-                          </div>
+                              • {enrollment.profiles?.email}
+                            </p>
+                          ))}
+                          {classroomEnrollments.length > 3 && (
+                            <p className="text-sm text-slate-500">
+                              +{classroomEnrollments.length - 3} more
+                            </p>
+                          )}
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Students Section */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Enrolled Students ({students.length})</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      {students.length > 0 ? (
-                        <div className="space-y-3">
-                          {students.map((student) => (
-                            <div
-                              key={student.id}
-                              className="p-3 border border-gray-200 rounded-lg"
-                            >
-                              <div className="font-medium text-gray-900">
-                                {student.first_name} {student.last_name}
-                              </div>
-                              <div className="text-sm text-gray-600">
-                                {student.email}
-                              </div>
-                              <div className="text-xs text-gray-500 mt-2">
-                                {student.pre_test_completed ? (
-                                  <span className="text-green-600">
-                                    ✓ Pre-test completed ({student.pre_test_score}%)
-                                  </span>
-                                ) : (
-                                  <span className="text-yellow-600">
-                                    Pre-test pending
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-gray-600">
-                          No students enrolled yet. Share the session code to get started.
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </>
-              ) : null
-            })()}
-          </div>
-        )}
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
