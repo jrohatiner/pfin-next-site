@@ -5,7 +5,7 @@ The numeric prefix is reassigned based on alphabetical order of titles.
 """
 
 import os
-from pathlib import Path
+import sys
 
 def alphabetize_directory(dir_path):
     """Alphabetize files in a directory by title, keeping numeric prefixes."""
@@ -89,21 +89,63 @@ def alphabetize_directory(dir_path):
 def main():
     """Alphabetize files in content/lessons and content/videos directories."""
     
-    base_path = Path(__file__).parent.parent  # Go up from /scripts to project root
+    # The script is likely run from /home/user, but files are in /vercel/share/v0-project
+    # We need to find the actual project location by checking common paths
+    base_path = None
+    
+    # Try standard locations first
+    standard_paths = [
+        '/vercel/share/v0-project',
+        os.path.expanduser('~/pfin-next-site'),
+        os.path.expanduser('~/v0-project'),
+        '/root/pfin-next-site',
+    ]
+    
+    for path in standard_paths:
+        if os.path.isdir(path):
+            lessons_dir = os.path.join(path, 'content', 'lessons')
+            if os.path.isdir(lessons_dir):
+                base_path = path
+                break
+    
+    # If still not found, search from common root directories
+    if not base_path:
+        for search_root in ['/', '/vercel', '/root', os.path.expanduser('~')]:
+            if not os.path.isdir(search_root):
+                continue
+            for root, dirs, files in os.walk(search_root, topdown=True):
+                # Limit search depth to avoid scanning too many directories
+                if root.count(os.sep) - search_root.count(os.sep) > 3:
+                    dirs[:] = []
+                    continue
+                if 'content' in dirs:
+                    lessons_path = os.path.join(root, 'content', 'lessons')
+                    if os.path.isdir(lessons_path):
+                        base_path = root
+                        break
+            if base_path:
+                break
+    
+    if not base_path:
+        print("❌ Could not find project root with content/lessons directory")
+        print(f"Current dir: {os.getcwd()}")
+        print(f"Tried: {standard_paths}")
+        sys.exit(1)
     
     directories = [
-        base_path / 'content' / 'lessons',
-        base_path / 'content' / 'videos'
+        os.path.join(base_path, 'content', 'lessons'),
+        os.path.join(base_path, 'content', 'videos')
     ]
     
     print("Alphabetizing content files by title...")
     print(f"Project root: {base_path}")
     
     for dir_path in directories:
-        alphabetize_directory(str(dir_path))
+        alphabetize_directory(dir_path)
     
     print("\n✅ All content files have been alphabetized by title!")
 
 
 if __name__ == '__main__':
     main()
+
