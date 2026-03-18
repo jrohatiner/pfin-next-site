@@ -1,63 +1,65 @@
-import fs from 'fs';
-import path from 'path';
+#!/usr/bin/env node
 
+import { readdirSync, renameSync, statSync } from 'fs';
+import { join } from 'path';
+
+const projectRoot = '/vercel/share/v0-project';
 const contentDirs = [
-  '/vercel/share/v0-project/content/lessons',
-  '/vercel/share/v0-project/content/videos'
+  join(projectRoot, 'content', 'lessons'),
+  join(projectRoot, 'content', 'videos')
 ];
 
 function removeNumberPrefix(filename) {
-  // Remove leading numbers and dash: "0001-" or "0110-" becomes ""
   return filename.replace(/^\d+-/, '');
 }
 
 function processDirectory(dir) {
   console.log(`\n📂 Processing: ${dir}`);
   
-  const files = fs.readdirSync(dir);
-  
-  // Filter out non-files and create mapping of old -> new names
-  const fileMap = files
-    .filter(file => {
-      const fullPath = path.join(dir, file);
-      return fs.statSync(fullPath).isFile();
-    })
-    .map(file => ({
-      oldName: file,
-      newName: removeNumberPrefix(file)
-    }))
-    .sort((a, b) => a.newName.localeCompare(b.newName));
+  try {
+    const files = readdirSync(dir);
+    console.log(`   Found ${files.length} entries`);
+    
+    const fileMap = files
+      .filter(file => {
+        try {
+          return statSync(join(dir, file)).isFile();
+        } catch {
+          return false;
+        }
+      })
+      .map(oldName => ({
+        oldName,
+        newName: removeNumberPrefix(oldName)
+      }))
+      .sort((a, b) => a.newName.localeCompare(b.newName));
 
-  // Rename files
-  let renamed = 0;
-  for (const { oldName, newName } of fileMap) {
-    if (oldName === newName) {
-      console.log(`  ⏭️  ${oldName} (no change needed)`);
-      continue;
+    console.log(`   Found ${fileMap.length} files`);
+
+    let renamed = 0;
+    for (const { oldName, newName } of fileMap) {
+      if (oldName === newName) continue;
+      
+      const oldPath = join(dir, oldName);
+      const newPath = join(dir, newName);
+      
+      try {
+        renameSync(oldPath, newPath);
+        console.log(`  ✅ ${oldName} → ${newName}`);
+        renamed++;
+      } catch (error) {
+        console.error(`  ❌ Failed: ${error.message}`);
+      }
     }
     
-    const oldPath = path.join(dir, oldName);
-    const newPath = path.join(dir, newName);
-    
-    try {
-      fs.renameSync(oldPath, newPath);
-      console.log(`  ✅ ${oldName} → ${newName}`);
-      renamed++;
-    } catch (error) {
-      console.error(`  ❌ Failed to rename ${oldName}: ${error.message}`);
-    }
+    console.log(`   Renamed: ${renamed}/${fileMap.length}`);
+  } catch (error) {
+    console.error(`⚠️  Error: ${error.message}`);
   }
-  
-  console.log(`   Total renamed: ${renamed}/${fileMap.length}`);
 }
 
-// Process both directories
 for (const dir of contentDirs) {
-  if (fs.existsSync(dir)) {
-    processDirectory(dir);
-  } else {
-    console.error(`⚠️  Directory not found: ${dir}`);
-  }
+  processDirectory(dir);
 }
 
-console.log('\n✅ All content files have been reorganized alphabetically!');
+console.log('\n✅ Done!');
