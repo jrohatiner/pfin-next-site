@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import type { ComponentType } from "react";
 
 const contentDir = path.join(process.cwd(), "content");
 const lessonsDir = path.join(contentDir, "lessons");
@@ -12,7 +13,26 @@ export interface ContentItem {
   content: string; // Raw content (markdown or HTML)
   filename: string;
   isHtml: boolean; // True if content is HTML, false if markdown
+  isTsx?: boolean; // True if this is a TSX component
+  Component?: ComponentType; // The TSX component if available
 }
+
+// Registry of TSX components - maps slug to component import
+// Add new converted components here
+export const tsxComponentRegistry: Record<"lessons" | "videos", Record<string, { title: string; getComponent: () => Promise<{ default: ComponentType }> }>> = {
+  lessons: {
+    "credit-cards-terms-fees": {
+      title: "Credit Cards: Terms and Fees",
+      getComponent: () => import("@/components/lessons/credit-cards-terms-fees"),
+    },
+  },
+  videos: {
+    "magic-of-compound-interest": {
+      title: "The Magic of Compound Interest",
+      getComponent: () => import("@/components/videos/magic-of-compound-interest"),
+    },
+  },
+};
 
 function slugify(filename: string): string {
   return filename
