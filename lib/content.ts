@@ -50,6 +50,7 @@ export const tsxComponentRegistry: Record<
   },
 };
 
+// Helper function to slugify filenames for URL-safe keys
 function slugify(filename: string): string {
   return filename
     .replace(/^\d+-/, "")
