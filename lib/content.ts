@@ -17,8 +17,8 @@ export interface ContentItem {
   Component?: ComponentType; // The TSX component if available
 }
 
-// Registry of TSX components - maps slug to component import
-// Add new converted components here
+// Registry of manually created TSX components - maps slug to component import
+// Add new hand-converted components here for better performance
 export const tsxComponentRegistry: Record<"lessons" | "videos", Record<string, { title: string; getComponent: () => Promise<{ default: ComponentType }> }>> = {
   lessons: {
     "credit-cards-terms-fees": {
