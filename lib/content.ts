@@ -17,13 +17,9 @@ export interface ContentItem {
   Component?: ComponentType;
 }
 
-// Registry of TSX components - maps slug to component import
-// Only includes manually converted components that actually exist
-// Components are lazy-loaded on demand for better performance
-export const tsxComponentRegistry: Record<
-  "lessons" | "videos",
-  Record<string, { title: string; getComponent: () => Promise<{ default: ComponentType }> }>
-> = {
+// Registry of manually created TSX components - maps slug to component import
+// Add new hand-converted components here for better performance
+export const tsxComponentRegistry: Record<"lessons" | "videos", Record<string, { title: string; getComponent: () => Promise<{ default: ComponentType }> }>> = {
   lessons: {
     "credit-cards-terms-fees": {
       title: "Credit Cards: Terms and Fees",
@@ -152,7 +148,7 @@ export interface ContentNavInfo {
 export function getLessonNavigation(slug: string): ContentNavInfo {
   const lessons = getAllLessons();
   const index = lessons.findIndex((l) => l.slug === slug);
-
+  
   return {
     prev: index > 0 ? { slug: lessons[index - 1].slug, title: lessons[index - 1].title } : null,
     next: index < lessons.length - 1 ? { slug: lessons[index + 1].slug, title: lessons[index + 1].title } : null,
@@ -162,7 +158,7 @@ export function getLessonNavigation(slug: string): ContentNavInfo {
 export function getVideoNavigation(slug: string): ContentNavInfo {
   const videos = getAllVideos();
   const index = videos.findIndex((v) => v.slug === slug);
-
+  
   return {
     prev: index > 0 ? { slug: videos[index - 1].slug, title: videos[index - 1].title } : null,
     next: index < videos.length - 1 ? { slug: videos[index + 1].slug, title: videos[index + 1].title } : null,
