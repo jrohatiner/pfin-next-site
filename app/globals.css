@@ -67,6 +67,20 @@ main {
   text-decoration: none;
 }
 
+.navbar-login {
+  background: #0b57d0;
+  color: #ffffff !important;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.navbar-login:hover {
+  background: #0847a8;
+  text-decoration: none !important;
+}
+
 /* Content Navigation Footer */
 .content-nav {
   margin-top: 3rem;
@@ -177,6 +191,45 @@ main {
   color: #666;
   margin: 0;
   line-height: 1.5;
+}
+
+.auth-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.auth-button {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.auth-button:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.auth-button.login {
+  background: #0b57d0;
+  color: #ffffff;
+}
+
+.auth-button.login:hover {
+  background: #0847a8;
+}
+
+.auth-button.signup {
+  background: #1a1a2e;
+  color: #ffffff;
+}
+
+.auth-button.signup:hover {
+  background: #2a2a4e;
 }
 
 /* Page Footer */
