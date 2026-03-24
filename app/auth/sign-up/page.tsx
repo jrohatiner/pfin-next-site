@@ -96,144 +96,252 @@ export default function SignUp() {
 
   if (!userType) {
     return (
-      <div className="flex h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4">
-        <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-lg">
-          <h1 className="mb-2 text-center text-3xl font-bold text-slate-900">
-            Create Account
-          </h1>
-          <p className="mb-8 text-center text-slate-600">
-            Are you a student or teacher?
-          </p>
-
-          <div className="space-y-4">
-            <button
-              onClick={() => setUserType('student')}
-              className="w-full rounded-lg border-2 border-blue-200 bg-blue-50 px-6 py-4 font-semibold text-blue-700 transition hover:border-blue-400 hover:bg-blue-100"
-            >
-              Student
-            </button>
-            <button
-              onClick={() => setUserType('teacher')}
-              className="w-full rounded-lg border-2 border-purple-200 bg-purple-50 px-6 py-4 font-semibold text-purple-700 transition hover:border-purple-400 hover:bg-purple-100"
-            >
-              Teacher
-            </button>
-          </div>
-
-          <p className="mt-6 text-center text-sm text-slate-600">
-            Already have an account?{' '}
-            <Link href="/auth/login" className="font-semibold text-blue-600 hover:underline">
-              Sign In
-            </Link>
-          </p>
+      <div style={styles.page}>
+        <div style={styles.wrapper}>
+          <h2 style={styles.heading}>Create an Account</h2>
+          <form style={styles.form}>
+            <div style={styles.imgcontainer}>
+              <div style={styles.avatarCircle}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="#ffffff">
+                  <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                </svg>
+              </div>
+            </div>
+            <div style={styles.container}>
+              <p style={{ textAlign: 'center', color: '#555', marginBottom: '1.5rem' }}>
+                Are you a student or teacher?
+              </p>
+              <button
+                type="button"
+                onClick={() => setUserType('student')}
+                style={{ ...styles.submitBtn, marginBottom: '12px' }}
+              >
+                I am a Student
+              </button>
+              <button
+                type="button"
+                onClick={() => setUserType('teacher')}
+                style={{ ...styles.submitBtn, background: '#0b57d0' }}
+              >
+                I am a Teacher
+              </button>
+            </div>
+            <div style={styles.footer}>
+              <Link href="/" style={styles.cancelBtn}>Cancel</Link>
+              <span style={styles.forgotSpan}>
+                Already have an account?{' '}
+                <Link href="/auth/login" style={styles.link}>Sign In</Link>
+              </span>
+            </div>
+          </form>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 px-4">
-      <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-lg">
-        <button
-          onClick={() => setUserType(null)}
-          className="mb-6 text-sm text-blue-600 hover:underline"
-        >
-          ← Change user type
-        </button>
-
-        <h1 className="mb-2 text-2xl font-bold text-slate-900">
+    <div style={styles.page}>
+      <div style={styles.wrapper}>
+        <h2 style={styles.heading}>
           Sign Up as {userType === 'student' ? 'Student' : 'Teacher'}
-        </h1>
-        <p className="mb-6 text-sm text-slate-600">
-          {userType === 'student'
-            ? 'Join a classroom and start learning'
-            : 'Create your own classroom'}
-        </p>
+        </h2>
+        <form onSubmit={handleSignUp} style={styles.form}>
+          <div style={styles.imgcontainer}>
+            <div style={{ ...styles.avatarCircle, background: userType === 'teacher' ? '#0b57d0' : '#04AA6D' }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="#ffffff">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+              </svg>
+            </div>
+          </div>
 
-        <form onSubmit={handleSignUp} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-slate-700">
-              Email
-            </label>
+          <div style={styles.container}>
+            <button
+              type="button"
+              onClick={() => setUserType(null)}
+              style={{ background: 'none', border: 'none', color: '#0b57d0', cursor: 'pointer', padding: '0 0 12px 0', fontSize: '0.875rem' }}
+            >
+              ← Change account type
+            </button>
+
+            <label htmlFor="email" style={styles.label}><b>Email</b></label>
             <input
               id="email"
               type="email"
+              placeholder="Enter Email"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              placeholder="your@email.com"
+              style={styles.input}
               disabled={loading}
             />
-          </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-slate-700">
-              Password
-            </label>
+            <label htmlFor="password" style={styles.label}><b>Password</b></label>
             <input
               id="password"
               type="password"
+              placeholder="Enter Password"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              placeholder="••••••••"
+              style={styles.input}
               disabled={loading}
             />
-          </div>
 
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700">
-              Confirm Password
-            </label>
+            <label htmlFor="confirmPassword" style={styles.label}><b>Confirm Password</b></label>
             <input
               id="confirmPassword"
               type="password"
+              placeholder="Confirm Password"
+              required
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              placeholder="••••••••"
+              style={styles.input}
               disabled={loading}
             />
+
+            {userType === 'student' && (
+              <>
+                <label htmlFor="sessionCode" style={styles.label}><b>Classroom Session Code</b></label>
+                <input
+                  id="sessionCode"
+                  type="text"
+                  placeholder="e.g. ABC123"
+                  value={sessionCode}
+                  onChange={(e) => setSessionCode(e.target.value.toUpperCase())}
+                  style={styles.input}
+                  disabled={loading}
+                />
+                <p style={{ fontSize: '0.8rem', color: '#888', margin: '-8px 0 12px 0' }}>
+                  Ask your teacher for the session code
+                </p>
+              </>
+            )}
+
+            {error && <p style={styles.error}>{error}</p>}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{ ...styles.submitBtn, background: userType === 'teacher' ? '#0b57d0' : '#04AA6D' }}
+            >
+              {loading ? 'Creating account...' : 'Create Account'}
+            </button>
           </div>
 
-          {userType === 'student' && (
-            <div>
-              <label htmlFor="sessionCode" className="block text-sm font-medium text-slate-700">
-                Classroom Session Code
-              </label>
-              <input
-                id="sessionCode"
-                type="text"
-                value={sessionCode}
-                onChange={(e) => setSessionCode(e.target.value.toUpperCase())}
-                className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                placeholder="e.g. ABC123"
-                disabled={loading}
-              />
-              <p className="mt-1 text-xs text-slate-500">
-                Ask your teacher for the classroom session code
-              </p>
-            </div>
-          )}
-
-          {error && <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">{error}</div>}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
-          >
-            {loading ? 'Creating account...' : 'Sign Up'}
-          </button>
+          <div style={styles.footer}>
+            <Link href="/" style={styles.cancelBtn}>Cancel</Link>
+            <span style={styles.forgotSpan}>
+              Already have an account?{' '}
+              <Link href="/auth/login" style={styles.link}>Sign In</Link>
+            </span>
+          </div>
         </form>
-
-        <p className="mt-6 text-center text-sm text-slate-600">
-          Already have an account?{' '}
-          <Link href="/auth/login" className="font-semibold text-blue-600 hover:underline">
-            Sign In
-          </Link>
-        </p>
       </div>
     </div>
   )
+}
+
+const styles: Record<string, React.CSSProperties> = {
+  page: {
+    fontFamily: 'Arial, Helvetica, sans-serif',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#f5f5f5',
+    padding: '2rem 1rem',
+  },
+  wrapper: {
+    width: '100%',
+    maxWidth: '400px',
+  },
+  heading: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    marginBottom: '1rem',
+    color: '#1a1a2e',
+    textAlign: 'center',
+  },
+  form: {
+    border: '3px solid #f1f1f1',
+    borderRadius: '8px',
+    background: '#ffffff',
+    overflow: 'hidden',
+  },
+  imgcontainer: {
+    textAlign: 'center',
+    margin: '24px 0 12px 0',
+  },
+  avatarCircle: {
+    width: '80px',
+    height: '80px',
+    borderRadius: '50%',
+    background: '#04AA6D',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container: {
+    padding: '16px',
+  },
+  label: {
+    display: 'block',
+    marginBottom: '4px',
+    color: '#333',
+    fontSize: '0.95rem',
+  },
+  input: {
+    width: '100%',
+    padding: '12px 20px',
+    margin: '8px 0 16px 0',
+    display: 'block',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    boxSizing: 'border-box',
+    fontSize: '1rem',
+  },
+  error: {
+    color: '#f44336',
+    fontSize: '0.875rem',
+    margin: '0 0 8px 0',
+  },
+  submitBtn: {
+    background: '#04AA6D',
+    color: '#ffffff',
+    padding: '14px 20px',
+    margin: '8px 0',
+    border: 'none',
+    cursor: 'pointer',
+    width: '100%',
+    fontSize: '1rem',
+    fontWeight: '600',
+    borderRadius: '4px',
+  },
+  footer: {
+    padding: '16px',
+    background: '#f1f1f1',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '8px',
+  },
+  cancelBtn: {
+    padding: '10px 18px',
+    background: '#f44336',
+    color: '#ffffff',
+    borderRadius: '4px',
+    textDecoration: 'none',
+    fontSize: '0.9rem',
+    fontWeight: '600',
+  },
+  forgotSpan: {
+    fontSize: '0.875rem',
+    color: '#555',
+  },
+  link: {
+    color: '#0b57d0',
+    textDecoration: 'none',
+  },
 }

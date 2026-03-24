@@ -1,16 +1,6 @@
 'use client'
 
 import { createClient } from '@/lib/supabase/client'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -18,6 +8,7 @@ import { useState } from 'react'
 export default function Page() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [remember, setRemember] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
@@ -35,7 +26,6 @@ export default function Page() {
       })
       if (error) throw error
 
-      // Get user profile to determine role and redirect
       if (data.user) {
         const { data: profile } = await supabase
           .from('profiles')
@@ -46,13 +36,9 @@ export default function Page() {
         if (profile?.role === 'teacher') {
           router.push('/dashboard/teacher')
         } else if (profile?.role === 'student') {
-          if (profile.pre_test_completed) {
-            router.push('/dashboard/student')
-          } else {
-            router.push('/pre-test')
-          }
+          router.push(profile.pre_test_completed ? '/dashboard/student' : '/pre-test')
         } else {
-          router.push('/protected')
+          router.push('/dashboard')
         }
       }
     } catch (error: unknown) {
@@ -63,59 +49,186 @@ export default function Page() {
   }
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">Login</CardTitle>
-              <CardDescription>
-                Enter your email below to login to your account
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleLogin}>
-                <div className="flex flex-col gap-6">
-                  <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="password">Password</Label>
-                    <Input
-                      id="password"
-                      type="password"
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                  {error && <p className="text-sm text-red-500">{error}</p>}
-                  <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? 'Logging in...' : 'Login'}
-                  </Button>
-                </div>
-                <div className="mt-4 text-center text-sm">
-                  Don&apos;t have an account?{' '}
-                  <Link
-                    href="/auth/sign-up"
-                    className="underline underline-offset-4"
-                  >
-                    Sign up
-                  </Link>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </div>
+    <div style={styles.page}>
+      <div style={styles.wrapper}>
+        <h2 style={styles.heading}>IFi Labs Login</h2>
+        <form onSubmit={handleLogin} style={styles.form}>
+          {/* Avatar */}
+          <div style={styles.imgcontainer}>
+            <div style={styles.avatarCircle}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="#ffffff">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+              </svg>
+            </div>
+          </div>
+
+          {/* Fields */}
+          <div style={styles.container}>
+            <label htmlFor="email" style={styles.label}><b>Email</b></label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter Email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={styles.input}
+              disabled={isLoading}
+            />
+
+            <label htmlFor="password" style={styles.label}><b>Password</b></label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={styles.input}
+              disabled={isLoading}
+            />
+
+            {error && <p style={styles.error}>{error}</p>}
+
+            <button type="submit" style={styles.submitBtn} disabled={isLoading}>
+              {isLoading ? 'Logging in...' : 'Login'}
+            </button>
+
+            <label style={styles.rememberLabel}>
+              <input
+                type="checkbox"
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+                style={{ marginRight: '6px' }}
+              />
+              Remember me
+            </label>
+          </div>
+
+          {/* Footer */}
+          <div style={styles.footer}>
+            <Link href="/" style={styles.cancelBtn}>Cancel</Link>
+            <span style={styles.forgotSpan}>
+              <Link href="/auth/sign-up" style={styles.link}>Create account</Link>
+              {' · '}
+              <Link href="/auth/reset-password" style={styles.link}>Forgot password?</Link>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
   )
+}
+
+const styles: Record<string, React.CSSProperties> = {
+  page: {
+    fontFamily: 'Arial, Helvetica, sans-serif',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#f5f5f5',
+    padding: '2rem 1rem',
+  },
+  wrapper: {
+    width: '100%',
+    maxWidth: '400px',
+  },
+  heading: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    marginBottom: '1rem',
+    color: '#1a1a2e',
+    textAlign: 'center',
+  },
+  form: {
+    border: '3px solid #f1f1f1',
+    borderRadius: '8px',
+    background: '#ffffff',
+    overflow: 'hidden',
+  },
+  imgcontainer: {
+    textAlign: 'center',
+    margin: '24px 0 12px 0',
+  },
+  avatarCircle: {
+    width: '80px',
+    height: '80px',
+    borderRadius: '50%',
+    background: '#04AA6D',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container: {
+    padding: '16px',
+  },
+  label: {
+    display: 'block',
+    marginBottom: '4px',
+    color: '#333',
+    fontSize: '0.95rem',
+  },
+  input: {
+    width: '100%',
+    padding: '12px 20px',
+    margin: '8px 0 16px 0',
+    display: 'block',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    boxSizing: 'border-box',
+    fontSize: '1rem',
+  },
+  error: {
+    color: '#f44336',
+    fontSize: '0.875rem',
+    margin: '0 0 8px 0',
+  },
+  submitBtn: {
+    background: '#04AA6D',
+    color: '#ffffff',
+    padding: '14px 20px',
+    margin: '8px 0',
+    border: 'none',
+    cursor: 'pointer',
+    width: '100%',
+    fontSize: '1rem',
+    fontWeight: '600',
+    borderRadius: '4px',
+    opacity: 1,
+  },
+  rememberLabel: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: '8px',
+    fontSize: '0.9rem',
+    color: '#555',
+  },
+  footer: {
+    padding: '16px',
+    background: '#f1f1f1',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '8px',
+  },
+  cancelBtn: {
+    padding: '10px 18px',
+    background: '#f44336',
+    color: '#ffffff',
+    borderRadius: '4px',
+    textDecoration: 'none',
+    fontSize: '0.9rem',
+    fontWeight: '600',
+  },
+  forgotSpan: {
+    fontSize: '0.875rem',
+    color: '#555',
+  },
+  link: {
+    color: '#0b57d0',
+    textDecoration: 'none',
+  },
 }
