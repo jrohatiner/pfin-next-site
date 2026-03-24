@@ -56,7 +56,7 @@ export default function DashboardLayout({
   }
 
   if (!user) {
-    return <div></div>
+    return <div style={{ display: 'none' }}></div>
   }
 
   return (
@@ -83,7 +83,6 @@ export default function DashboardLayout({
           </div>
           <button
             onClick={handleLogout}
-            type="button"
             style={{
               background: 'transparent',
               border: '1px solid #ccc',
