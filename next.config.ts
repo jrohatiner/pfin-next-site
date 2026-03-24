@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Pure React TypeScript - no MDX
+  turbopack: {
+    root: process.cwd(),
+  },
 };
 
 export default nextConfig;
