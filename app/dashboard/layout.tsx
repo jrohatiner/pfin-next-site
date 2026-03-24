@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
+// Dashboard layout for authenticated users
+
 export default function DashboardLayout({
   children,
 }: {
