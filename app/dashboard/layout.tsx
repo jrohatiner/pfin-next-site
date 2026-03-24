@@ -5,13 +5,11 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-// Dashboard layout for authenticated users
-
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
-}) {
+}): React.ReactElement {
   const [user, setUser] = useState<any>(null)
   const [role, setRole] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -57,14 +55,16 @@ export default function DashboardLayout({
     )
   }
 
-  if (!user) return null
+  if (!user) {
+    return <div></div>
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
       <nav style={{ background: '#ffffff', borderBottom: '1px solid #e0e0e0', padding: '1rem 2rem' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-            <Link href="/" style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#1a1a2e' }}>
+            <Link href="/" style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#1a1a2e', textDecoration: 'none' }}>
               IFi Labs
             </Link>
             <div style={{ display: 'flex', gap: '1.5rem' }}>
@@ -83,11 +83,12 @@ export default function DashboardLayout({
           </div>
           <button
             onClick={handleLogout}
+            type="button"
             style={{
               background: 'transparent',
               border: '1px solid #ccc',
               borderRadius: '6px',
-              padding: '0.4rem 1rem',
+              padding: '0.5rem 1rem',
               cursor: 'pointer',
               fontSize: '0.9rem',
               color: '#555',
@@ -97,9 +98,9 @@ export default function DashboardLayout({
           </button>
         </div>
       </nav>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
+      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
         {children}
-      </div>
+      </main>
     </div>
   )
 }
