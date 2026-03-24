@@ -18,16 +18,37 @@ export interface ContentItem {
 }
 
 // Registry of manually created TSX components - maps slug to component import
-// Add new hand-converted components here for better performance
+// Only quiz/exam components that use PopQuiz are registered here.
+// Regular lesson TSX files are intentionally excluded — the markdown renderer handles them correctly.
 export const tsxComponentRegistry: Record<"lessons" | "videos", Record<string, { title: string; getComponent: () => Promise<{ default: ComponentType }> }>> = {
   lessons: {
-    "credit-cards-terms-fees": {
-      title: "Credit Cards: Terms and Fees",
-      getComponent: () => import("@/components/lessons/credit-cards-terms-fees"),
+    // ── Investing 101 Vocabulary Quizzes ──────────────────────────────────
+    // Chapter 5 is the only vocabulary quiz with actual questions in its TSX component.
+    // Chapters 1, 2, 4, 7, 9 were not converted — they fall through to markdown content.
+    "investing-101-chapter-5-vocabulary-quiz": {
+      title: "Investing 101 – Chapter 5 Vocabulary Quiz",
+      getComponent: () => import("@/components/lessons/investing-101-chapter-5-vocabulary-quiz"),
     },
-    "build-wealth-not-debt": {
-      title: "A Strategy to Build Wealth, Not Debt",
-      getComponent: () => import("@/components/lessons/build-wealth-not-debt"),
+    // ── Chapter Exams ────────────────────────────────────────────────────
+    "chapter-2-exam": {
+      title: "2-12 Chapter 2 Exam",
+      getComponent: () => import("@/components/lessons/2-12-chapter-2-exam"),
+    },
+    "chapter-4-exam": {
+      title: "4-08 Chapter 4 Exam",
+      getComponent: () => import("@/components/lessons/4-08-chapter-4-exam"),
+    },
+    "chapter-5-exam": {
+      title: "5-09 Chapter 5 Exam",
+      getComponent: () => import("@/components/lessons/5-09-chapter-5-exam"),
+    },
+    "chapter-7-exam": {
+      title: "7-16 Chapter 7 Exam",
+      getComponent: () => import("@/components/lessons/7-16-chapter-7-exam"),
+    },
+    "chapter-9-exam": {
+      title: "9-11 Chapter 9 Exam",
+      getComponent: () => import("@/components/lessons/9-11-chapter-9-exam"),
     },
   },
   videos: {
