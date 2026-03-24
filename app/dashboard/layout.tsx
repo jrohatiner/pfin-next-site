@@ -3,7 +3,6 @@
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
 export default function DashboardLayout({
@@ -27,7 +26,6 @@ export default function DashboardLayout({
 
       setUser(sessionData.session.user)
 
-      // Get user role
       const { data: profile } = await supabase
         .from('profiles')
         .select('role')
@@ -51,66 +49,55 @@ export default function DashboardLayout({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
         <p>Loading...</p>
       </div>
     )
   }
 
-  if (!user) {
-    return null
-  }
+  if (!user) return null
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="text-xl font-bold">
+    <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
+      <nav style={{ background: '#ffffff', borderBottom: '1px solid #e0e0e0', padding: '1rem 2rem' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+            <Link href="/" style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#1a1a2e' }}>
               IFi Labs
             </Link>
-            <div className="flex gap-6">
-              <Link
-                href="/dashboard"
-                className="text-gray-700 hover:text-gray-900"
-              >
-                Dashboard
-              </Link>
+            <div style={{ display: 'flex', gap: '1.5rem' }}>
+              <Link href="/dashboard" style={{ color: '#555', textDecoration: 'none' }}>Dashboard</Link>
               {role === 'student' && (
                 <>
-                  <Link
-                    href="/lessons"
-                    className="text-gray-700 hover:text-gray-900"
-                  >
-                    Lessons
-                  </Link>
-                  <Link
-                    href="/videos"
-                    className="text-gray-700 hover:text-gray-900"
-                  >
-                    Videos
-                  </Link>
+                  <Link href="/lessons" style={{ color: '#555', textDecoration: 'none' }}>Lessons</Link>
+                  <Link href="/videos" style={{ color: '#555', textDecoration: 'none' }}>Videos</Link>
+                  <Link href="/dashboard/student" style={{ color: '#555', textDecoration: 'none' }}>My Progress</Link>
                 </>
               )}
               {role === 'teacher' && (
-                <Link
-                  href="/dashboard/teacher"
-                  className="text-gray-700 hover:text-gray-900"
-                >
-                  Manage Classes
-                </Link>
+                <Link href="/dashboard/teacher" style={{ color: '#555', textDecoration: 'none' }}>Manage Classes</Link>
               )}
             </div>
           </div>
-          <Button onClick={handleLogout} variant="outline">
+          <button
+            onClick={handleLogout}
+            style={{
+              background: 'transparent',
+              border: '1px solid #ccc',
+              borderRadius: '6px',
+              padding: '0.4rem 1rem',
+              cursor: 'pointer',
+              fontSize: '0.9rem',
+              color: '#555',
+            }}
+          >
             Logout
-          </Button>
+          </button>
         </div>
       </nav>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-8">{children}</main>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
+        {children}
+      </div>
     </div>
   )
 }
