@@ -42,13 +42,14 @@ export default function SignUp() {
 
     try {
       // Sign up with metadata
+      // Use the current origin for the redirect URL
+      const origin = typeof window !== 'undefined' ? window.location.origin : ''
+      
       const { data, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo:
-            process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ||
-            `${window.location.origin}/protected`,
+          emailRedirectTo: `${origin}/auth/callback`,
           data: {
             role: userType,
             session_code: userType === 'student' ? sessionCode : undefined,
