@@ -2,9 +2,20 @@
 
 import Link from "next/link";
 import { useTheme } from "@/lib/theme/ThemeProvider";
+import { useEffect, useState } from "react";
 
 export function Navbar() {
   const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent rendering until client-side hydration is complete
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <nav className="navbar">
