@@ -3,6 +3,11 @@
 html {
   margin: 0;
   padding: 0;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -12,6 +17,11 @@ body {
   color: #111111;
   font-family: Arial, sans-serif;
   overflow-y: auto;
+}
+
+html.dark body {
+  background: #1a1a2e;
+  color: #e0e0e0;
 }
 
 * {
@@ -64,6 +74,7 @@ main {
 .navbar-links {
   display: flex;
   gap: 2rem;
+  align-items: center;
 }
 
 .navbar-links a {
@@ -73,6 +84,19 @@ main {
 .navbar-links a:hover {
   color: #ffffff;
   text-decoration: none;
+}
+
+.navbar-theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  transition: transform 0.2s;
+}
+
+.navbar-theme-toggle:hover {
+  transform: scale(1.1);
 }
 
 .navbar-login {
@@ -187,10 +211,19 @@ main {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
+html.dark .content-card {
+  background: #2a2a3e;
+  border-color: #404050;
+}
+
 .content-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   text-decoration: none;
+}
+
+html.dark .content-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .content-card h2 {
@@ -199,10 +232,18 @@ main {
   font-size: 1.5rem;
 }
 
+html.dark .content-card h2 {
+  color: #ffffff;
+}
+
 .content-card p {
   color: #666;
   margin: 0;
   line-height: 1.5;
+}
+
+html.dark .content-card p {
+  color: #b0b0c0;
 }
 
 .auth-links {
@@ -668,6 +709,10 @@ main {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+html.dark .pop-quiz-container {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Buttons */
