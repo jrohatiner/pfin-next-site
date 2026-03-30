@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function Navbar() {
+export function Navbar(): React.ReactElement {
   return (
     <nav className="navbar">
       <div className="navbar-content">
